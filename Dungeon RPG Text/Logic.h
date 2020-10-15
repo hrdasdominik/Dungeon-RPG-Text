@@ -29,6 +29,5 @@ private:
 
 	//Player related
 	Player player;
-	Dice* dice;
 };
 

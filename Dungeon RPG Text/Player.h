@@ -21,17 +21,17 @@ public:
 	int AttributeMod[22] = { 0, 0, -5, -4, -4, -3, -3, -2 -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5 };
 
 	//Accessors
-	inline const bool& fGetAlive() const { return this->alive; }
-	inline const std::string& fGetName() const { return this->name; }
-	inline const std::string& fGetClass() const { return this->class_name; }
-	inline const int& fGetHealth() const { return this->health; }
-	inline const int& fGetMana() const { return this->mana; }
-	inline const int& fGetAC() const { return this->armor_class; }
-	inline const int& fGetINT() const { return this->initiative; }
-	inline const int& fGetSpeed() const { return this->speed; }
-	inline const int& fGetExp() const { return this->exp; }
-	inline const int& fGetLevel() const { return this->level; }
-	inline const int& fGetPB() const { return this->proficiency_bonus; }
+	inline const bool& fGetAlive() const { return alive; }
+	inline const std::string& fGetName() const { return name; }
+	inline const std::string& fGetClass() const { return class_name; }
+	inline const int& fGetHealth() const { return health; }
+	inline const int& fGetMana() const { return mana; }
+	inline const int& fGetAC() const { return armor_class; }
+	inline const int& fGetINT() const { return initiative; }
+	inline const int& fGetSpeed() const { return speed; }
+	inline const int& fGetExp() const { return exp; }
+	inline const int& fGetLevel() const { return level; }
+	inline const int& fGetPB() const { return proficiency_bonus; }
 
 	//Modifiers
 	inline void fSetClass(const std::string& class_name) { this->class_name = class_name; }
