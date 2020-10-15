@@ -74,8 +74,7 @@ void Logic::fPickClass()
 void Logic::fNewGame()
 {
 	fInsertName();
-	player.fGetStatsAll();
+	player.fGetStatsAttributes();
 	fPickClass();
 }
-
 

@@ -16,9 +16,7 @@ public:
 	int fGetMod(int attribute);
 	void fGetStatsAttributes() const;
 	void fGetStatsAll() const;
-
-	
-	int AttributeMod[22] = { 0, 0, -5, -4, -4, -3, -3, -2 -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5 };
+	void fLevelUp();
 
 	//Accessors
 	inline const bool& fGetAlive() const { return alive; }
@@ -39,6 +37,7 @@ public:
 private:
 	Dice* dice;
 	int x_pos, y_pos;
+	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
 
 	bool alive;
 	std::string name;

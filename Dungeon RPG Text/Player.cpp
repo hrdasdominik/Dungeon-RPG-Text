@@ -4,7 +4,7 @@
 
 Player::Player()
 {
-	//fInitialize("Player");
+	fInitialize("Player");
 }
 
 Player::~Player()
@@ -23,12 +23,12 @@ void Player::fInitialize(std::string name)
 	charisma = dice->fRoll(6, 3);
 	
 	//Modifiers
-	mod_strength = fGetMod(strength);
-	mod_dexterity = fGetMod(dexterity);
-	mod_constitution = fGetMod(constitution);
-	mod_intelligence = fGetMod(intelligence);
-	mod_wisdom = fGetMod(wisdom);
-	mod_charisma = fGetMod(charisma);
+	mod_strength = fGetMod(strength - 1);
+	mod_dexterity = fGetMod(dexterity - 1);
+	mod_constitution = fGetMod(constitution - 1);
+	mod_intelligence = fGetMod(intelligence - 1);
+	mod_wisdom = fGetMod(wisdom - 1);
+	mod_charisma = fGetMod(charisma - 1);
 
 	//Saving throws
 	saving_strength = mod_strength;
@@ -70,6 +70,11 @@ void Player::fInitialize(std::string name)
 	exp = 0;
 	level = 1;
 	proficiency_bonus = level % 2;
+}
+
+int Player::fGetMod(int attribute)
+{
+	return AttributeMod[attribute];
 }
 
 void Player::fGetStatsAttributes() const
@@ -134,9 +139,13 @@ void Player::fGetStatsAll() const
 	std::cout << std::endl;
 }
 
-
-
-int Player::fGetMod(int attribute)
+void Player::fLevelUp()
 {
-	return AttributeMod[attribute];
+	static const int required_experience[] =
+	{
+	  45, 95, 145, 210, 285, 380, 495, 610, 745, 99999999
+	};
+
+	while (exp >= required_experience[level])
+		++level;
 }

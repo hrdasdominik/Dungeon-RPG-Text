@@ -17,6 +17,8 @@ public:
 	void fPickClass();
 	void fNewGame();
 	
+	//Story functions
+	
 
 	//Accessors
 	inline const bool fGetPlaying() const { return this->playing; }
