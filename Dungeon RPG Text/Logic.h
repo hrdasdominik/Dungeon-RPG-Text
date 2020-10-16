@@ -30,6 +30,5 @@ private:
 	bool playing;
 
 	//Player related
-	Player player;
+	Player* player;
 };
-
