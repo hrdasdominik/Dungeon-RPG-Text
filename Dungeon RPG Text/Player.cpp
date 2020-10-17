@@ -1,9 +1,12 @@
 #include "Player.h"
+#include "Dice.h"
+
 
 Player::Player()
 {
 	fInitialize("Player");
 }
+
 Player::~Player()
 {
 
@@ -12,20 +15,20 @@ Player::~Player()
 void Player::fInitialize(std::string name)
 {
 	//Attributes
-	strength = dice->fStatsRoll();
-	dexterity = dice->fStatsRoll();
-	constitution = dice->fStatsRoll();
-	intelligence = dice->fStatsRoll();
-	wisdom = dice->fStatsRoll();
-	charisma = dice->fStatsRoll();
+	strength = dice->fRoll(6, 3);
+	dexterity = dice->fRoll(6, 3);
+	constitution = dice->fRoll(6, 3);
+	intelligence = dice->fRoll(6, 3);
+	wisdom = dice->fRoll(6, 3);
+	charisma = dice->fRoll(6, 3);
 	
 	//Modifiers
-	mod_strength = AttributeMod[strength - 1];
-	mod_dexterity = AttributeMod[dexterity - 1];
-	mod_constitution = AttributeMod[constitution - 1];
-	mod_intelligence = AttributeMod[intelligence - 1];
-	mod_wisdom = AttributeMod[wisdom - 1];
-	mod_charisma = AttributeMod[charisma - 1];
+	mod_strength = fGetMod(strength - 1);
+	mod_dexterity = fGetMod(dexterity - 1);
+	mod_constitution = fGetMod(constitution - 1);
+	mod_intelligence = fGetMod(intelligence - 1);
+	mod_wisdom = fGetMod(wisdom - 1);
+	mod_charisma = fGetMod(charisma - 1);
 
 	//Saving throws
 	saving_strength = mod_strength;
@@ -60,16 +63,18 @@ void Player::fInitialize(std::string name)
 	this->name = name;
 	class_name = "None";
 	health = 10 + mod_constitution;
-	health = fNoNull(health);
 	mana = 0 + mod_intelligence;
-	mana = fNoNull(mana);
 	armor_class = 10 + mod_dexterity;
 	initiative = mod_dexterity;
 	speed = 2 + mod_dexterity;
-	speed = fLimitSpeed(speed);
 	exp = 0;
 	level = 1;
-	proficiency_bonus = ProficiencyBonus[level - 1];
+	proficiency_bonus = level % 2;
+}
+
+int Player::fGetMod(int attribute)
+{
+	return AttributeMod[attribute];
 }
 
 void Player::fGetStatsAttributes() const
@@ -85,18 +90,16 @@ void Player::fGetStatsAttributes() const
 	std::cout << std::endl;
 }
 
+
 void Player::fGetStatsAll() const
 {
 	std::cout << std::endl;
-	//std::cout << std::setfill('=') << std::setw (10) << std::endl;
+	//std::cout << std::setw(10) << std::setfill('=') << std::endl;
 	std::cout << "= Character Sheet =" << std::endl;
 	std::cout << "Name: " << name << std::endl;
 	std::cout << "Class: " << class_name << std::endl;
-	std::cout << "Health: " << health << std::endl;
-	std::cout << "Mana: " << mana << std::endl;
 	std::cout << "Level: " << level << std::endl;
 	std::cout << "Exp: " << exp << std::endl;
-	std::cout << "Proficiency bonus: " << proficiency_bonus << std::endl;
 	std::cout << std::endl;
 	std::cout << "== Attributes ==" << std::endl;
 	std::cout << "Strength: " << strength << " (" << mod_strength << ")" << std::endl;
@@ -145,155 +148,4 @@ void Player::fLevelUp()
 
 	while (exp >= required_experience[level])
 		++level;
-}
-
-void Player::fSetClass(std::string name)
-{
-	fSetClassName(name);
-	fSetProficiency(name);
-}
-
-void Player::fSetProficiency(std::string name)
-{
-	if (name == "Fighter" || name == "fighter" || name == "1")
-	{
-		std::cout << "Choose a skill from given: " << std::endl;
-		std::cout << "1. Acrobatics\n" 
-			<< "2. Animal Handling\n"
-			<< "3. Athletics\n" 
-			<< "4. History\n" 
-			<< "5. Insight\n"
-			<< "6. Intimidation\n" 
-			<< "7. Perception\n" 
-			<< "8. Survival" 
-			<< "Choice: ";
-		std::cin >> choice;
-		switch (choice)
-		{
-		case 1:
-			acrobatics = acrobatics + proficiency_bonus;
-			break;
-		case 2:
-			animal_handling = animal_handling + proficiency_bonus;
-			break;
-		case 3:
-			athletics = athletics + proficiency_bonus;
-			break;
-		case 4:
-			history = history + proficiency_bonus;
-			break;
-		case 5:
-			insight = insight + proficiency_bonus;
-			break;
-		case 6:
-			intimidation = intimidation + proficiency_bonus;
-			break;
-		case 7:
-			perception = perception + proficiency_bonus;
-			break;
-		case 8:
-			survival = survival + proficiency_bonus;
-			break;
-		default:
-			break;
-		}
-	}
-	//----------------------------RANGER----------------------------------
-	else if (name == "Ranger" || name == "ranger" || name == "2")
-	{
-		std::cout << "Choose a skill from given: " << std::endl;
-		std::cout << "1. Animal Handling\n" 
-			<< "2. Athletics\n"
-			<< "3. Insight\n" 
-			<< "4. Investigation\n" 
-			<< "5. Nature\n"
-			<< "6. Perception\n" 
-			<< "7. Stealth\n" 
-			<< "8. Survival" 
-			<< "Choice: ";
-		std::cin >> choice;
-		switch (choice)
-		{
-		case 1:
-			animal_handling = animal_handling + proficiency_bonus;
-			break;
-		case 2:
-			athletics = athletics + proficiency_bonus;
-			break;
-		case 3:
-			insight = insight + proficiency_bonus;
-			break;
-		case 4:
-			investigation = investigation + proficiency_bonus;
-			break;
-		case 5:
-			nature = nature + proficiency_bonus;
-			break;
-		case 6:
-			perception = perception + proficiency_bonus;
-			break;
-		case 7:
-			stealth = stealth + proficiency_bonus;
-			break;
-		case 8:
-			survival = survival + proficiency_bonus;
-			break;
-		default:
-			break;
-		}
-	}
-	//---------------------------SORCERER------------------------------
-	else if (name == "Sorcerer" || name == "sorcerer" || name == "3")
-	{
-		std::cout << "Choose a skill from given: " << std::endl;
-		std::cout << "1. Arcana\n"
-			<< "2. Deception\n"
-			<< "3. Insight\n"
-			<< "4. Intimidation\n"
-			<< "5. Persuasion\n"
-			<< "6. Religion\n" 
-			<< "Choice: ";
-		std::cin >> choice;
-		switch (choice)
-		{
-		case 1:
-			arcana = arcana + proficiency_bonus;
-			std::cout << "You've chosen arcana." << std::endl;
-			break;
-		case 2:
-			deception = deception + proficiency_bonus;
-			std::cout << "You've chosen deception." << std::endl;
-			break;
-		case 3:
-			insight = insight + proficiency_bonus;
-			std::cout << "You've chosen insight." << std::endl;
-			break;
-		case 4:
-			intimidation = intimidation + proficiency_bonus;
-			std::cout << "You've chosen intimidation." << std::endl;
-			break;
-		case 5:
-			persuasion = persuasion + proficiency_bonus;
-			std::cout << "You've chosen persuasion." << std::endl;
-			break;
-		case 6:
-			religion = religion + proficiency_bonus;
-			std::cout << "You've chosen religion." << std::endl;
-			break;
-		default:
-			break;
-		}
-	}
-	else {}
-		//logic->fPickClass();
-}
-
-int Player::fNoNull(int value)
-{
-	return value = (value < 0) ? 0 : value;
-}
-
-int Player::fLimitSpeed(int value)
-{
-	return value = (value < 1) ? 1 : value;
 }

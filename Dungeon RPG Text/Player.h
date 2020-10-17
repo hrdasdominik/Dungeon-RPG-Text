@@ -2,7 +2,6 @@
 #include "Dice.h"
 
 class Dice;
-class Logic;
 
 class Player
 {
@@ -14,13 +13,10 @@ public:
 
 	//Functions
 	void fInitialize(std::string name);
+	int fGetMod(int attribute);
 	void fGetStatsAttributes() const;
 	void fGetStatsAll() const;
 	void fLevelUp();
-
-	//Class Setup
-	void fSetClass(std::string name);
-	void fSetProficiency(std::string name);
 
 	//Accessors
 	inline const bool& fGetAlive() const { return alive; }
@@ -36,24 +32,13 @@ public:
 	inline const int& fGetPB() const { return proficiency_bonus; }
 
 	//Modifiers
-	inline void fSetClassName(const std::string& class_name) { this->class_name = class_name; }
+	inline void fSetClass(const std::string& class_name) { this->class_name = class_name; }
 
 private:
-	int fNoNull(int value);
-	int fLimitSpeed(int value);
-
-private:
-	//Class pointers
 	Dice* dice;
-	Logic* logic;
-	
-	//Arrays
-	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
-	int ProficiencyBonus[20] = { 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6 };
-
-	//Player initialize
 	int x_pos, y_pos;
-	int choice;
+	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
+
 	bool alive;
 	std::string name;
 	std::string class_name;

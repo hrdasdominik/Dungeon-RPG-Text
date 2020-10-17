@@ -1,5 +1,6 @@
 ﻿  Logic.cpp
   Main.cpp
+F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Main.cpp(5,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Player.cpp
   Generating Code...
   Dungeon RPG Text.vcxproj -> F:\00_CPP\Dungeon RPG Text\Debug\Dungeon RPG Text.exe
