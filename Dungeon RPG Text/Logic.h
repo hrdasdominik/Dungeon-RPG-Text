@@ -10,11 +10,9 @@ public:
 	//Operators
 
 	//Functions
-	void fInsertName();
 	
 	//Game functions
 	void fMainMenu();
-	void fPickClass();
 	void fNewGame();
 	
 	//Story functions

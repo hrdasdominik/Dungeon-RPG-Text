@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include <algorithm>
+#include <numeric>
 
 class Dice
 {
@@ -15,6 +17,7 @@ public:
 	
 	//Functions
 	int fRoll(int sides, int number);
+	int fRollStats();
 
 	//Accessors
 	static Dice* fGetDice() { return &dice; }

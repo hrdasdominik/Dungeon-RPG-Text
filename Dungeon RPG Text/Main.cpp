@@ -2,7 +2,7 @@
 
 int main()
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	Logic logic;
 		

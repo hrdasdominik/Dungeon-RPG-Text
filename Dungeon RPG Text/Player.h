@@ -13,10 +13,15 @@ public:
 
 	//Functions
 	void fInitialize(std::string name);
-	int fGetMod(int attribute);
 	void fGetStatsAttributes() const;
 	void fGetStatsAll() const;
 	void fLevelUp();
+	int fNoNull(int value);
+	void fInsertName();
+
+	//Class functions
+	void fPickClass();
+	void fPickProficiency();
 
 	//Accessors
 	inline const bool& fGetAlive() const { return alive; }
@@ -35,10 +40,14 @@ public:
 	inline void fSetClass(const std::string& class_name) { this->class_name = class_name; }
 
 private:
+	//Class pointers
 	Dice* dice;
-	int x_pos, y_pos;
-	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
 
+	//Arrays
+	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
+	int ProficiencyBonus[20] = { 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5 };
+
+	//Basic stats
 	bool alive;
 	std::string name;
 	std::string class_name;
