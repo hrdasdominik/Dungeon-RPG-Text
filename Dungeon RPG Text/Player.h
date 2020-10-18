@@ -12,32 +12,32 @@ public:
 	virtual ~Player();
 
 	//Functions
-	void fInitialize(std::string name);
 	void fGetStatsAttributes() const;
 	void fGetStatsAll() const;
 	void fLevelUp();
-	int fNoNull(int value);
-	void fInsertName();
-
-	//Class functions
+	
+	//Player creation
+	void fInitialize(std::string name);
 	void fPickClass();
-	void fPickProficiency();
+	void fInsertName();
 
 	//Accessors
 	inline const bool& fGetAlive() const { return alive; }
 	inline const std::string& fGetName() const { return name; }
 	inline const std::string& fGetClass() const { return class_name; }
 	inline const int& fGetHealth() const { return health; }
-	inline const int& fGetMana() const { return mana; }
 	inline const int& fGetAC() const { return armor_class; }
 	inline const int& fGetINT() const { return initiative; }
-	inline const int& fGetSpeed() const { return speed; }
 	inline const int& fGetExp() const { return exp; }
 	inline const int& fGetLevel() const { return level; }
 	inline const int& fGetPB() const { return proficiency_bonus; }
 
 	//Modifiers
 	inline void fSetClass(const std::string& class_name) { this->class_name = class_name; }
+
+private: //Behind the scene functions
+	void fClassCreation();
+	int fNoNull(int value);
 
 private:
 	//Class pointers
@@ -52,10 +52,8 @@ private:
 	std::string name;
 	std::string class_name;
 	int health;
-	int mana;
 	int armor_class;
 	int initiative;
-	int speed;
 	int exp;
 	int level;
 	int proficiency_bonus;

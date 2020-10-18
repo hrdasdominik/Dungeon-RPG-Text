@@ -42,5 +42,7 @@ void Logic::fNewGame()
 	player.fInsertName();
 	player.fGetStatsAttributes();
 	player.fPickClass();
+	player.fLevelUp();
+	player.fGetStatsAll();
 }
 
