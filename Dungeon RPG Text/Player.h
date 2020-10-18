@@ -15,7 +15,8 @@ public:
 	void fGetStatsAttributes() const;
 	void fGetStatsAll() const;
 	void fLevelUp();
-	
+	void fGiveExp();
+
 	//Player creation
 	void fInitialize(std::string name);
 	void fPickClass();
@@ -46,6 +47,7 @@ private:
 	//Arrays
 	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
 	int ProficiencyBonus[20] = { 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5 };
+	int required_experience[11] = { 0, 45, 95, 145, 210, 285, 380, 495, 610, 745, 9999999 };
 
 	//Basic stats
 	bool alive;

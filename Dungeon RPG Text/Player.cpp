@@ -1,6 +1,4 @@
 #include "Player.h"
-#include "Dice.h"
-
 
 Player::Player()
 {
@@ -134,24 +132,17 @@ void Player::fGetStatsAll() const
 
 void Player::fLevelUp()
 {
-	static const int required_experience[] =
-	{
-	  45, 95, 145, 210, 285, 380, 495, 610, 745, 99999999
-	};
-
 	while (exp >= required_experience[level])
+	{
 		++level;
-	
-		if (level == ++level)
-		{ 
+		std::cout << "Exp needed to next level: " << required_experience[level] << std::endl;
+
 			if (class_name == "Fighter" || class_name == "Ranger")
 				health = health + dice->fRoll(10, 1);
 
 			else if (class_name == "Sorcerer")
 				health = health + dice->fRoll(6, 1);
-		}	
-		else
-			health = health;
+	}
 }
 
 int Player::fNoNull(int value)
@@ -167,6 +158,11 @@ void Player::fInsertName()
 	std::cout << "Enter your name: ";
 	std::cin >> name;
 	fInitialize(name);
+}
+
+void Player::fGiveExp()
+{
+	exp = exp + 45;
 }
 
 void Player::fPickClass()

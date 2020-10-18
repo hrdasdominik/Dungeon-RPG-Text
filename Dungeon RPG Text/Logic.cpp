@@ -1,6 +1,5 @@
 #include "Logic.h"
 
-
 Logic::Logic()
 {
 	choice = 0;
@@ -11,8 +10,6 @@ Logic::~Logic()
 {
 
 }
-
-
 
 void Logic::fMainMenu()
 {
@@ -42,7 +39,6 @@ void Logic::fNewGame()
 	player.fInsertName();
 	player.fGetStatsAttributes();
 	player.fPickClass();
-	player.fLevelUp();
 	player.fGetStatsAll();
 }
 
