@@ -10,6 +10,14 @@ Player::~Player()
 
 }
 
+bool Player::fIsAlive()
+{
+	if (health <= 0)
+		return alive == false;
+	else
+		return alive == true;
+}
+
 void Player::fInitialize(std::string name)
 {
 	//Attributes

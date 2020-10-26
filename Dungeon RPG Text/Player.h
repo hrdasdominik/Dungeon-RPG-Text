@@ -16,6 +16,7 @@ public:
 	void fGetStatsAll() const;
 	void fLevelUp();
 	void fGiveExp();
+	bool fIsAlive();
 
 	//Player creation
 	void fInitialize(std::string name);
