@@ -1,6 +1,5 @@
 #pragma once
-#include <vector>
-#include <string>
+#include "Item.h"
 
 class Inventory
 {
@@ -14,7 +13,16 @@ public:
 	//Modifiers
 
 
+	//Functions
+	void fAddItem(const Item& item);
+	void fDropItem(int index);
+	void fListItems();
+
 private:
-	std::vector<std::string>space;
+	//Containter
+	std::vector<Item> bag;
+
+	//Pointer & objects
+	Item* item;
 };
 

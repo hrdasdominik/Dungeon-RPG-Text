@@ -1,5 +1,5 @@
 #pragma once
-#include "Dice.h"
+#include "Inventory.h"
 
 class Dice;
 
