@@ -2,8 +2,12 @@
 
 Item::Item()
 {
-	space = 1;
 	name = "Item";
+}
+
+Item::Item(std::string)
+{
+
 }
 
 Item::~Item()

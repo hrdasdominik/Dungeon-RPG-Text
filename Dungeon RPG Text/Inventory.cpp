@@ -2,7 +2,7 @@
 
 Inventory::Inventory()
 {
-
+	item = {};
 }
 
 Inventory::~Inventory()
@@ -15,15 +15,19 @@ void Inventory::fAddItem(const Item& item)
 	bag.push_back(item);
 }
 
-void Inventory::fDropItem(int index)
+void Inventory::fDropItem()
 {
+	fListItems();
+	int index = 0;
+	std::cout << "Which item would you like to drop: ";
+	std::cin >> index;
 	bag.erase(bag.begin() + index);
 }
 
 void Inventory::fListItems()
 {
-	for (std::vector<Item>::iterator i = bag.begin(); i != bag.end(); ++i)
+	for (unsigned i = 0; i < bag.size(); i++)
 	{
-		std::cout << *i << '\n';
+		std::cout << i << " - " << bag[i].fGetName() << '\n';
 	}
 }

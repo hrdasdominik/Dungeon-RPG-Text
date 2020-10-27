@@ -15,7 +15,7 @@ public:
 
 	//Functions
 	void fAddItem(const Item& item);
-	void fDropItem(int index);
+	void fDropItem();
 	void fListItems();
 
 private:
