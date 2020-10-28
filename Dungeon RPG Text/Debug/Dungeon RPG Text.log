@@ -1,4 +1,7 @@
-﻿  Inventory.cpp
-  Item.cpp
+﻿  Logic.cpp
+F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.h(4,23): error C2530: 'bag': references must be initialized
+  Main.cpp
+F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.h(4,23): error C2530: 'bag': references must be initialized
+  Player.cpp
+F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.h(4,23): error C2530: 'bag': references must be initialized
   Generating Code...
-  Dungeon RPG Text.vcxproj -> C:\Users\Bela Rit\Documents\GitHub\Dungeon-RPG-Text\Debug\Dungeon RPG Text.exe

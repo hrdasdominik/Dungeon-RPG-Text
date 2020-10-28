@@ -74,6 +74,7 @@ void Player::fInitialize(std::string name)
 	exp = 0;
 	level = 1;
 	proficiency_bonus = ProficiencyBonus[level - 1];
+	damage = 0;
 }
 
 void Player::fGetStatsAttributes() const
@@ -157,6 +158,17 @@ int Player::fNoNull(int value)
 {
 	value = (value < 0) ? 0 : value;
 	return value;
+}
+
+int Player::fSetWeapon()
+{
+	int choice;
+	std::cout << "Pick a weapon from your inventory:\n"
+		<< std::endl;
+	inventory->fListItems();
+	std::cout << "Choose: ";
+	std::cin >> choice;
+	return damage = bag[choice].fGetDamage();
 }
 
 void Player::fInsertName()

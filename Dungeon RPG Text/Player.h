@@ -1,8 +1,6 @@
 #pragma once
 #include "Inventory.h"
 
-class Dice;
-
 class Player
 {
 public:
@@ -17,6 +15,7 @@ public:
 	void fLevelUp();
 	void fGiveExp();
 	bool fIsAlive();
+	int fSetWeapon();
 
 	//Player creation
 	void fInitialize(std::string name);
@@ -35,7 +34,8 @@ public:
 	inline const int& fGetPB() const { return proficiency_bonus; }
 
 	//Modifiers
-	inline void fSetClass(const std::string& class_name) { this->class_name = class_name; }
+	inline void fSetClass(std::string& class_name) { this->class_name = class_name; }
+	inline void fSetDamage(Weapon& weapon) { this->damage = weapon.fGetDamage(); }
 
 private: //Behind the scene functions
 	void fClassCreation();
@@ -44,6 +44,9 @@ private: //Behind the scene functions
 private:
 	//Class pointers
 	Dice* dice;
+	Weapon* weapon;
+	Inventory* inventory;
+	std::vector<Item>& bag;
 
 	//Arrays
 	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
@@ -60,6 +63,7 @@ private:
 	int exp;
 	int level;
 	int proficiency_bonus;
+	int damage;
 
 	//Attributes
 	int strength;
