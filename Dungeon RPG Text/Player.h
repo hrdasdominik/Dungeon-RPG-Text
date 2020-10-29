@@ -14,8 +14,9 @@ public:
 	void fGetStatsAll() const;
 	void fLevelUp();
 	void fGiveExp();
+	void fSetWeapon();
 	bool fIsAlive();
-	int fSetWeapon();
+	
 
 	//Player creation
 	void fInitialize(std::string name);

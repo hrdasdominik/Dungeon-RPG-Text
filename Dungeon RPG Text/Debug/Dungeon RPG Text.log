@@ -1,7 +1,5 @@
 ﻿  Logic.cpp
-F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.h(4,23): error C2530: 'bag': references must be initialized
   Main.cpp
-F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.h(4,23): error C2530: 'bag': references must be initialized
   Player.cpp
-F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.h(4,23): error C2530: 'bag': references must be initialized
+F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.cpp(4,1): error C2530: 'Player::bag': references must be initialized
   Generating Code...
