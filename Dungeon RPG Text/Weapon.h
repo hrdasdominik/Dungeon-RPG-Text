@@ -8,7 +8,10 @@ public:
 	virtual ~Weapon();
 
 	//Accessor
-	inline const int& fGetDamage() { return damage; }
+	inline const int& fGetDamage() { return damage; };
+
+	//Modifiers
+	inline int& fSetDamage(int& damage) { return this->damage = damage; }
 
 private:
 	int damage;

@@ -38,6 +38,8 @@ public:
 	inline void fSetClass(std::string& class_name) { this->class_name = class_name; }
 	inline void fSetDamage(Weapon& weapon) { this->damage = weapon.fGetDamage(); }
 
+	Inventory inventory;
+
 private: //Behind the scene functions
 	void fClassCreation();
 	int fNoNull(int value);
@@ -46,8 +48,8 @@ private:
 	//Class pointers
 	Dice* dice;
 	Weapon* weapon;
-	Inventory* inventory;
-	std::vector<Item>& bag;
+	
+	std::vector<Item>& ptrbag = inventory.bag;
 
 	//Arrays
 	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};

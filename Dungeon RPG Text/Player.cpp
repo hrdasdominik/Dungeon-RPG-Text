@@ -93,11 +93,11 @@ void Player::fGetStatsAttributes() const
 void Player::fGetStatsAll() const
 {
 	std::cout << std::endl;
-	//std::cout << std::setw(10) << std::setfill('=') << std::endl;
 	std::cout << "= Character Sheet =" << std::endl;
 	std::cout << "Name: " << name << std::endl;
 	std::cout << "Class: " << class_name << std::endl;
 	std::cout << "Health: " << health << std::endl;
+	std::cout << "Damage: " << damage << std::endl;
 	std::cout << "Level: " << level << std::endl;
 	std::cout << "Exp: " << exp << std::endl;
 	std::cout << std::endl;
@@ -165,10 +165,10 @@ void Player::fSetWeapon()
 	int choice;
 	std::cout << "Pick a weapon from your inventory:\n"
 		<< std::endl;
-	inventory->fListItems();
+	inventory.fListItems();
 	std::cout << "Choose: ";
 	std::cin >> choice;
-	damage = bag[choice].fGetDamage();
+	damage = ptrbag[choice].fGetDamage();
 }
 
 void Player::fInsertName()

@@ -1,5 +1,8 @@
-﻿  Logic.cpp
+﻿  Inventory.cpp
+  Item.cpp
+  Logic.cpp
   Main.cpp
   Player.cpp
-F:\00_CPP\Dungeon RPG Text\Dungeon RPG Text\Player.cpp(4,1): error C2530: 'Player::bag': references must be initialized
+  Weapon.cpp
   Generating Code...
+  Dungeon RPG Text.vcxproj -> C:\Users\Bela Rit\Documents\GitHub\Dungeon-RPG-Text\Debug\Dungeon RPG Text.exe

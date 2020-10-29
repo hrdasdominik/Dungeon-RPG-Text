@@ -3,7 +3,7 @@
 Weapon::Weapon(std::string name, int damage)
 {
 	fSetName(name);
-	this->damage = damage;
+	fSetDamage(damage);
 }
 
 Weapon::~Weapon()
