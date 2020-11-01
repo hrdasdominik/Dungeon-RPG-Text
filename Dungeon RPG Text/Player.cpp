@@ -160,17 +160,6 @@ int Player::fNoNull(int value)
 	return value;
 }
 
-void Player::fSetWeapon()
-{
-	int choice;
-	std::cout << "Pick a weapon from your inventory:\n"
-		<< std::endl;
-	inventory.fListItems();
-	std::cout << "Choose: ";
-	std::cin >> choice;
-	damage = ptrbag[choice].fGetDamage();
-}
-
 void Player::fInsertName()
 {
 	std::cout << std::endl;

@@ -2,7 +2,7 @@
 
 Inventory::Inventory()
 {
-	item = {};
+
 }
 
 Inventory::~Inventory()
@@ -10,7 +10,7 @@ Inventory::~Inventory()
 
 }
 
-void Inventory::fAddItem(const Item& item)
+void Inventory::fAddItem(Item& item)
 {
 	bag.push_back(item);
 }
@@ -30,4 +30,14 @@ void Inventory::fListItems()
 	{
 		std::cout << i << " - " << bag[i].fGetName() << '\n';
 	}
+}
+
+void Inventory::fAddWeapon()
+{
+	int choice;
+	std::cout << "Choose a weapon from the list: \n" << std::endl;
+	fListItems();
+	std::cout << "Choose: ";
+	std::cin >> choice;
+	weaponSlot->push_back(bag.at(choice));
 }

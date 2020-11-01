@@ -8,21 +8,17 @@ public:
 	virtual ~Inventory();
 
 	//Accessors
-	//const std::vector<Item>& fGetBag() const { return bag; };
+	const std::vector<Item>& fGetBag() const { return bag; };
 
 	//Functions
-	void fAddItem(const Item& item);
+	void fAddItem(Item& item);
 	void fDropItem();
 	void fListItems();
+	void fAddWeapon();
 
 	//Containter
 	std::vector<Item> bag;
-	std::vector<Weapon> weapon;
+	std::vector<Weapon> weaponSlot[1];
 
-private:
-
-	//Pointer & objects
-	Item* item;
-	Weapon* weapon;
 };
 

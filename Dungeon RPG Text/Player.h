@@ -14,7 +14,6 @@ public:
 	void fGetStatsAll() const;
 	void fLevelUp();
 	void fGiveExp();
-	void fSetWeapon();
 	bool fIsAlive();
 	
 
@@ -38,7 +37,7 @@ public:
 	inline void fSetClass(std::string& class_name) { this->class_name = class_name; }
 	inline void fSetDamage(Weapon& weapon) { this->damage = weapon.fGetDamage(); }
 
-	Inventory inventory;
+	
 
 private: //Behind the scene functions
 	void fClassCreation();
@@ -48,8 +47,9 @@ private:
 	//Class pointers
 	Dice* dice;
 	Weapon* weapon;
+	Inventory inventory;
 	
-	std::vector<Item>& ptrbag = inventory.bag;
+	//std::vector<Item>& ptrbag = inventory.bag;
 
 	//Arrays
 	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};

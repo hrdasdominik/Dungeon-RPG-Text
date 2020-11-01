@@ -13,6 +13,8 @@ public:
 	//Modifiers
 	inline int& fSetDamage(int& damage) { return this->damage = damage; }
 
+	//Functions
+
 private:
 	int damage;
 };
