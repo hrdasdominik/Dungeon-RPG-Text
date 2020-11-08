@@ -1,80 +1,31 @@
 #include "Player.h"
 
+//Constructor
 Player::Player()
 {
 	fInitialize("Player");
 }
 
-Player::~Player()
-{
 
+//Functions
+void Player::fLevelUp()
+{
+	while (exp >= required_experience[level])
+	{
+		++level;
+		std::cout << "Exp needed to next level: " << required_experience[level] << std::endl;
+
+		if (class_name == "Fighter" || class_name == "Ranger")
+			health = health + dice->fRoll(10, 1);
+
+		else if (class_name == "Sorcerer")
+			health = health + dice->fRoll(6, 1);
+	}
 }
 
-bool Player::fIsAlive()
+void Player::fGiveExp()
 {
-	if (health <= 0)
-		return alive == false;
-	else
-		return alive == true;
-}
-
-void Player::fInitialize(std::string name)
-{
-	//Attributes
-	strength = dice->fRollStats();
-	dexterity = dice->fRollStats();
-	constitution = dice->fRollStats();
-	intelligence = dice->fRollStats();
-	wisdom = dice->fRollStats();
-	charisma = dice->fRollStats();
-	
-	//Modifiers
-	mod_strength = AttributeMod[strength - 1];
-	mod_dexterity = AttributeMod[dexterity - 1];
-	mod_constitution = AttributeMod[constitution - 1];
-	mod_intelligence = AttributeMod[intelligence - 1];
-	mod_wisdom = AttributeMod[wisdom - 1];
-	mod_charisma = AttributeMod[charisma - 1];
-
-	//Saving throws
-	saving_strength = mod_strength;
-	saving_dexterity = mod_dexterity;
-	saving_constitution = mod_constitution;
-	saving_intelligence = mod_intelligence;
-	saving_wisdom = mod_wisdom;
-	saving_charisma = mod_charisma;
-
-	//Skills
-	acrobatics = mod_dexterity;
-	animal_handling = mod_wisdom;
-	arcana = mod_intelligence;
-	athletics = mod_strength;
-	deception = mod_charisma;
-	history = mod_intelligence;
-	insight = mod_wisdom;
-	intimidation = mod_charisma;
-	investigation = mod_intelligence;
-	medicine = mod_wisdom;
-	nature = mod_intelligence;
-	perception = mod_wisdom;
-	performance = mod_charisma;
-	persuasion = mod_charisma;
-	religion = mod_intelligence;
-	sleight_of_hand = mod_dexterity;
-	stealth = mod_dexterity;
-	survival = mod_wisdom;
-
-	alive = true;
-	this->name = name;
-	class_name = "None";
-	health = health + mod_constitution;
-	health = fNoNull(health);
-	armor_class = 10; // + armor
-	initiative = mod_dexterity;
-	exp = 0;
-	level = 1;
-	proficiency_bonus = ProficiencyBonus[level - 1];
-	damage = 0;
+	exp = exp + 45;
 }
 
 void Player::fGetStatsAttributes() const
@@ -139,39 +90,99 @@ void Player::fGetStatsAll() const
 	std::cout << std::endl;
 }
 
-void Player::fLevelUp()
+
+//Inventory
+void Player::fListItem()
 {
-	while (exp >= required_experience[level])
-	{
-		++level;
-		std::cout << "Exp needed to next level: " << required_experience[level] << std::endl;
-
-			if (class_name == "Fighter" || class_name == "Ranger")
-				health = health + dice->fRoll(10, 1);
-
-			else if (class_name == "Sorcerer")
-				health = health + dice->fRoll(6, 1);
-	}
+	inventory.fListItems();
 }
 
-int Player::fNoNull(int value)
+void Player::fAddItem(Item& item)
 {
-	value = (value < 0) ? 0 : value;
-	return value;
+	inventory.fAddItem(item);
 }
 
-void Player::fInsertName()
+void Player::fEquipWeapon()
 {
-	std::cout << std::endl;
-	std::string name;
-	std::cout << "Enter your name: ";
-	std::cin >> name;
-	fInitialize(name);
+	int choice;
+	fListItem();
+	std::cout << "Choose a weapon: ";
+	std::cin >> choice;
+	damage = inventory.fEquipWeapon(*inventory.fGetBag()[choice]);
 }
 
-void Player::fGiveExp()
+void Player::fUnEquipWeapon()
 {
-	exp = exp + 45;
+	damage = inventory.fUnEquipWeapon();
+}
+
+
+//Player creation
+void Player::fInitialize(std::string name)
+{
+	//Attributes
+	strength = dice->fRollStats();
+	dexterity = dice->fRollStats();
+	constitution = dice->fRollStats();
+	intelligence = dice->fRollStats();
+	wisdom = dice->fRollStats();
+	charisma = dice->fRollStats();
+
+	//Modifiers
+	mod_strength = AttributeMod[strength - 1];
+	mod_dexterity = AttributeMod[dexterity - 1];
+	mod_constitution = AttributeMod[constitution - 1];
+	mod_intelligence = AttributeMod[intelligence - 1];
+	mod_wisdom = AttributeMod[wisdom - 1];
+	mod_charisma = AttributeMod[charisma - 1];
+
+	//Saving throws
+	saving_strength = mod_strength;
+	saving_dexterity = mod_dexterity;
+	saving_constitution = mod_constitution;
+	saving_intelligence = mod_intelligence;
+	saving_wisdom = mod_wisdom;
+	saving_charisma = mod_charisma;
+
+	//Skills
+	acrobatics = mod_dexterity;
+	animal_handling = mod_wisdom;
+	arcana = mod_intelligence;
+	athletics = mod_strength;
+	deception = mod_charisma;
+	history = mod_intelligence;
+	insight = mod_wisdom;
+	intimidation = mod_charisma;
+	investigation = mod_intelligence;
+	medicine = mod_wisdom;
+	nature = mod_intelligence;
+	perception = mod_wisdom;
+	performance = mod_charisma;
+	persuasion = mod_charisma;
+	religion = mod_intelligence;
+	sleight_of_hand = mod_dexterity;
+	stealth = mod_dexterity;
+	survival = mod_wisdom;
+
+	alive = true;
+	this->name = name;
+	class_name = "None";
+	health = health + mod_constitution;
+	health = fNoNull(health);
+	armor_class = 10; // + armor
+	initiative = mod_dexterity;
+	exp = 0;
+	level = 1;
+	proficiency_bonus = ProficiencyBonus[level - 1];
+	damage = 0;
+}
+
+bool Player::fIsAlive()
+{
+	if (health <= 0)
+		return alive == false;
+	else
+		return alive == true;
 }
 
 void Player::fPickClass()
@@ -186,6 +197,17 @@ void Player::fPickClass()
 	fClassCreation();
 }
 
+void Player::fInsertName()
+{
+	std::cout << std::endl;
+	std::string name;
+	std::cout << "Enter your name: ";
+	std::cin >> name;
+	fInitialize(name);
+}
+
+
+//Behind the scene functions
 void Player::fClassCreation()
 {
 	if (class_name == "Fighter" || class_name == "fighter" || class_name == "1")
@@ -564,4 +586,10 @@ void Player::fClassCreation()
 		std::cout << "Error. Please select one of the given classes" << std::endl;
 		fPickClass();
 	}
+}
+
+int Player::fNoNull(int value)
+{
+	value = (value < 0) ? 0 : value;
+	return value;
 }

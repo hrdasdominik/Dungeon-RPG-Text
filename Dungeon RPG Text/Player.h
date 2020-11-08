@@ -7,18 +7,23 @@ public:
 
 	//Constructor n Deconstructor
 	Player();
-	virtual ~Player();
+	virtual ~Player() {};
 
 	//Functions
-	void fGetStatsAttributes() const;
-	void fGetStatsAll() const;
 	void fLevelUp();
 	void fGiveExp();
-	bool fIsAlive();
-	
+	void fGetStatsAttributes() const;
+	void fGetStatsAll() const;
 
+	//Inventory
+	void fListItem();
+	void fAddItem(Item& item);
+	void fEquipWeapon();
+	void fUnEquipWeapon();
+	
 	//Player creation
 	void fInitialize(std::string name);
+	bool fIsAlive();
 	void fPickClass();
 	void fInsertName();
 
@@ -37,9 +42,8 @@ public:
 	inline void fSetClass(std::string& class_name) { this->class_name = class_name; }
 	inline void fSetDamage(Weapon& weapon) { this->damage = weapon.fGetDamage(); }
 
-	
-
-private: //Behind the scene functions
+private: 
+	//Behind the scene functions
 	void fClassCreation();
 	int fNoNull(int value);
 
@@ -48,8 +52,6 @@ private:
 	Dice* dice;
 	Weapon* weapon;
 	Inventory inventory;
-	
-	//std::vector<Item>& ptrbag = inventory.bag;
 
 	//Arrays
 	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
@@ -76,7 +78,7 @@ private:
 	int wisdom;
 	int charisma;
 
-	//Modifiers
+	//Attribute modifiers
 	int mod_strength;
 	int mod_dexterity;
 	int mod_constitution;
@@ -112,4 +114,3 @@ private:
 	int stealth;
 	int survival;
 };
-

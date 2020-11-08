@@ -16,7 +16,6 @@ public:
 	void fNewGame();
 	
 	//Story functions
-	
 
 	//Accessors
 	inline const bool fGetPlaying() const { return this->playing; }
@@ -24,6 +23,7 @@ public:
 	//Modifiers
 
 private:
+
 	int choice;
 	bool playing;
 

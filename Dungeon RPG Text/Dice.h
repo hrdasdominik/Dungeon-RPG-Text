@@ -8,6 +8,8 @@
 #include <functional>
 #include <algorithm>
 #include <numeric>
+#include <typeinfo>
+#include <map>
 
 class Dice
 {

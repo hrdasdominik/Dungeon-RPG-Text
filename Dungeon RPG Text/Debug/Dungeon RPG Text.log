@@ -1,4 +1,8 @@
 ﻿  Inventory.cpp
+  Logic.cpp
+  Main.cpp
+  Player.cpp
   Weapon.cpp
   Generating Code...
+C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Dungeon RPG Text\Inventory.cpp(35): warning C4715: 'Inventory::fEquipWeapon': not all control paths return a value
   Dungeon RPG Text.vcxproj -> C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Debug\Dungeon RPG Text.exe
