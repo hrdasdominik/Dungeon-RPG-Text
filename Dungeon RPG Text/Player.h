@@ -14,12 +14,18 @@ public:
 	void fGiveExp();
 	void fGetStatsAttributes() const;
 	void fGetStatsAll() const;
+	int fRollInitiative();
+	inline int fRollHit() const { return dice->fRoll(20, 1) + proficiency_bonus; }
+	inline void fTakeDamage(int damage) { health -= damage; }
+	inline int fRollDamage() const { return dice->fRoll(damage, roll_times); }
 
 	//Inventory
 	void fListItem();
 	void fAddItem(Item& item);
 	void fEquipWeapon();
 	void fUnEquipWeapon();
+	void fEquipArmor();
+	void fUnEquipArmor();
 	
 	//Player creation
 	void fInitialize(std::string name);
@@ -44,11 +50,11 @@ public:
 
 private: 
 	//Behind the scene functions
-	void fClassCreation();
+	void fLoadClasses(std::string name);
 	int fNoNull(int value);
 
 private:
-	//Class pointers
+	//Objects
 	Dice* dice;
 	Weapon* weapon;
 	Inventory inventory;
@@ -63,12 +69,15 @@ private:
 	std::string name;
 	std::string class_name;
 	int health;
+	std::string armor_name;
+	std::string weapon_name;
 	int armor_class;
 	int initiative;
 	int exp;
 	int level;
 	int proficiency_bonus;
 	int damage;
+	int roll_times;
 
 	//Attributes
 	int strength;

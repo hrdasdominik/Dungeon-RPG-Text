@@ -1,0 +1,56 @@
+None
+None 0 0
+
+Battle-axe
+Battle-axe 8 1
+
+Flail
+Flail 8 1
+
+Glaive
+Glaive 10 1
+
+Great-axe
+Great-axe 12 1
+
+Great-sword
+Great-sword 6 2
+
+Halberd
+Halberd 10 1
+
+Lance 
+Lance 12 1
+
+Long-sword
+Long-sword 8 1
+
+Maul
+Maul 6 2
+
+Morning-star
+Morning-star 8 1
+
+Pike
+Pike 10 1
+
+Rapier
+Rapier 8 1
+
+Scimitar
+Scimitar 6 1
+
+Short-sword
+Short-sword 6 1
+
+Trident
+Trident 6 1
+
+War-pick
+War-pick 8 1
+
+War-hammer
+War-hammer 8 1
+
+Whip
+Whip 4 1

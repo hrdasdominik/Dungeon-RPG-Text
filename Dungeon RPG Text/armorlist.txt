@@ -1,0 +1,41 @@
+None
+None 10
+
+Padded
+Padded 11
+
+Leather
+Leather 11
+
+Studded-leather
+Studded-leather 12
+
+Hide
+Hide 12
+
+Chain-shirt
+Chain-shirt 13
+
+Scale-mail
+Scale-mail 14
+
+Spike-armor
+Spike-armor 14
+
+Breastplate
+Breastplate 14
+
+Halfplate
+Halfplate 15
+
+Ring-mail
+Ring-mail 14
+
+Chain-mail
+Chain-mail 16
+
+Splint
+Splint 17
+
+Plate
+Plate 18

@@ -16,6 +16,7 @@ public:
 
 	//Weapon functions
 	int fEquipWeapon(Item& item);
+	int fEquipTimes(Weapon& element);
 	int fUnEquipWeapon();
 
 	//Armor functions
@@ -25,6 +26,7 @@ public:
 	//Accessor
 	std::vector<Item*> fGetBag() { return bag; }
 	std::vector<Weapon*> fGetWeaponSlot() { return weaponSlot; }
+	std::vector<Armor*> fGetArmorSlot() { return armorSlot; }
 
 private:
 	//Behind the scene functions

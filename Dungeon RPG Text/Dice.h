@@ -2,6 +2,8 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <Windows.h>
 #include <vector>
 #include <string>

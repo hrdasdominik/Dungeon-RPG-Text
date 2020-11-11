@@ -39,6 +39,71 @@ void Logic::fNewGame()
 	player.fInsertName();
 	player.fGetStatsAttributes();
 	player.fPickClass();
-	player.fGetStatsAll();
+	Enemy enemy("Goblin");
+	fBattle(enemy);
+}
+
+void Logic::fBattle(Enemy& enemy)
+{
+	if (player.fRollInitiative() > enemy.fRollInitiative())
+	{
+		while (player.fGetAlive() == true && enemy.fGetAlive() == true)
+		{
+
+			std::cout << "You see " << enemy.fGetName() << ".\n"
+				<< "What do you wanna do?" << std::endl;
+			std::string choice;
+			std::cin >> choice;
+			if (choice == "Attack")
+			{
+				if (player.fRollHit() > enemy.fGetAC())
+				{
+					enemy.fTakeDamage(player.fRollDamage());
+					std::cout << enemy.fGetName() << " has left "
+						<< enemy.fGetHealth() << " health." << std::endl;
+				}
+				else
+					std::cout << player.fGetName() << " has missed." << std::endl;
+			}
+			if (enemy.fRollHit() > player.fGetAC())
+			{
+				player.fTakeDamage(enemy.fRollDamage());
+				std::cout << player.fGetName() << " has left " 
+					<< player.fGetHealth() << " health." << std::endl;
+			}
+			else
+				std::cout << enemy.fGetName() << " has missed." << std::endl;
+		}
+	}
+	else if (player.fRollInitiative() < enemy.fRollInitiative())
+	{
+		while (player.fGetAlive() == true && enemy.fGetAlive() == true)
+		{
+			if (enemy.fRollHit() > player.fGetAC())
+			{
+				player.fTakeDamage(enemy.fRollDamage());
+				std::cout << player.fGetName() << " has left "
+					<< player.fGetHealth() << " health." << std::endl;
+			}
+			else
+				std::cout << enemy.fGetName() << " has missed." << std::endl;
+
+			std::cout << "You see " << enemy.fGetName() << ".\n"
+				<< "What do you wanna do?" << std::endl;
+			std::string choice;
+			std::cin >> choice;
+			if (choice == "Attack")
+			{
+				if (player.fRollHit() > enemy.fGetAC())
+				{
+					enemy.fTakeDamage(player.fRollDamage());
+					std::cout << enemy.fGetHealth() << std::endl;
+				}
+				else
+					std::cout << player.fGetName() << " has missed." << std::endl;
+			}
+		}
+	}
+	
 }
 

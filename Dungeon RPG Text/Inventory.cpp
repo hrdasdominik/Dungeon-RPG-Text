@@ -61,6 +61,11 @@ int Inventory::fEquipWeapon(Item& item)
 	}
 }
 
+int Inventory::fEquipTimes(Weapon& element)
+{
+	return element.fGetTimes();
+}
+
 int Inventory::fUnEquipWeapon()
 {
 	Item* wp = dynamic_cast<Item*>(weaponSlot[0]);

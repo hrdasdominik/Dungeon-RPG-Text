@@ -48,7 +48,8 @@ void Player::fGetStatsAll() const
 	std::cout << "Name: " << name << std::endl;
 	std::cout << "Class: " << class_name << std::endl;
 	std::cout << "Health: " << health << std::endl;
-	std::cout << "Damage: " << damage << std::endl;
+	std::cout << "Damage: " << roll_times << "d" << damage << std::endl;
+	std::cout << "Armor: " << armor_class << std::endl;
 	std::cout << "Level: " << level << std::endl;
 	std::cout << "Exp: " << exp << std::endl;
 	std::cout << std::endl;
@@ -90,6 +91,11 @@ void Player::fGetStatsAll() const
 	std::cout << std::endl;
 }
 
+int Player::fRollInitiative()
+{
+	return dice->fRoll(20, 1) + mod_dexterity;
+}
+
 
 //Inventory
 void Player::fListItem()
@@ -102,6 +108,7 @@ void Player::fAddItem(Item& item)
 	inventory.fAddItem(item);
 }
 
+//Weapon
 void Player::fEquipWeapon()
 {
 	int choice;
@@ -109,6 +116,7 @@ void Player::fEquipWeapon()
 	std::cout << "Choose a weapon: ";
 	std::cin >> choice;
 	damage = inventory.fEquipWeapon(*inventory.fGetBag()[choice]);
+	roll_times = inventory.fEquipTimes(*inventory.fGetWeaponSlot()[0]);
 }
 
 void Player::fUnEquipWeapon()
@@ -116,6 +124,20 @@ void Player::fUnEquipWeapon()
 	damage = inventory.fUnEquipWeapon();
 }
 
+//Armor
+void Player::fEquipArmor()
+{
+	int choice;
+	fListItem();
+	std::cout << "Choose an armor: ";
+	std::cin >> choice;
+	armor_class = inventory.fEquipArmor(*inventory.fGetBag()[choice]);
+}
+
+void Player::fUnEquipArmor()
+{
+	armor_class = inventory.fUnEquipArmor();
+}
 
 //Player creation
 void Player::fInitialize(std::string name)
@@ -169,12 +191,13 @@ void Player::fInitialize(std::string name)
 	class_name = "None";
 	health = health + mod_constitution;
 	health = fNoNull(health);
-	armor_class = 10; // + armor
+	armor_class = 0;
 	initiative = mod_dexterity;
 	exp = 0;
 	level = 1;
 	proficiency_bonus = ProficiencyBonus[level - 1];
 	damage = 0;
+	roll_times = 0;
 }
 
 bool Player::fIsAlive()
@@ -188,13 +211,13 @@ bool Player::fIsAlive()
 void Player::fPickClass()
 {
 	std::cout << "== Pick a class ==" << std::endl;
-	std::cout << "1. Fighter (Strength)\n"
-		<< "2. Ranger (Dexterity)\n"
-		<< "3. Sorcerer (Charisma)\n" << std::endl;
+	std::cout << "Fighter\n";
+	std::cout << "Ranger\n";
 	std::cout << "Enter: ";
-	std::cin >> class_name;
+	std::string choice;
+	std::cin >> choice;
 	std::cout << std::endl;
-	fClassCreation();
+	fLoadClasses(choice);
 }
 
 void Player::fInsertName()
@@ -208,384 +231,50 @@ void Player::fInsertName()
 
 
 //Behind the scene functions
-void Player::fClassCreation()
+
+void Player::fLoadClasses(std::string name)
 {
-	if (class_name == "Fighter" || class_name == "fighter" || class_name == "1")
-	{
-		class_name = "Fighter";
-		health = 10 + mod_constitution;
-		saving_strength = saving_strength + proficiency_bonus;
-		saving_constitution = saving_constitution + proficiency_bonus;
-		std::cout << "You've chosen fighter class.\n"
-			<< "Your health is set to: " << health << std::endl << std::endl;
-		std::cout <<"Please choose two skills:" << std::endl;
-		std::cout << "1. Acrobatics (Dexterity)\n"
-			<< "2. Animal Handling (Wisdom)\n"
-			<< "3. Athletics (Strenght)\n"
-			<< "4. History (Intelligence)\n"
-			<< "5. Insight (Wisdom)\n"
-			<< "6. Intimidation (Charisma)\n"
-			<< "7. Perception (Wisdom)\n"
-			<< "8. Survival (Wisdom)\n"
-			<< "Choose the first one: ";
-		int pro_choice1;
-		std::cin >> pro_choice1;
-		switch (pro_choice1)
-		{
-		case 1:
-			std::cout << "Acrobatics before: " << acrobatics << std::endl;
-			acrobatics = acrobatics + proficiency_bonus;
-			std::cout << "Acrobatics now: " << acrobatics << std::endl << std::endl;
-			break;
-		case 2:
-			std::cout << "Animal Handling before: " << animal_handling << std::endl;
-			animal_handling = animal_handling + proficiency_bonus;
-			std::cout << "Animal Handling now: " << animal_handling << std::endl << std::endl;
-			break;
-		case 3:
-			std::cout << "Athletics before: " << athletics << std::endl;
-			athletics = athletics + proficiency_bonus;
-			std::cout << "Athletics now: " << athletics << std::endl << std::endl;
-			break;
-		case 4:
-			std::cout << "History before: " << history << std::endl;
-			history = history + proficiency_bonus;
-			std::cout << "History now: " << history << std::endl << std::endl;
-			break;
-		case 5:
-			std::cout << "Insight before: " << insight << std::endl;
-			insight = insight + proficiency_bonus;
-			std::cout << "Insight now: " << insight << std::endl << std::endl;
-			break;
-		case 6:
-			std::cout << "Intimidation before: " << intimidation << std::endl;
-			intimidation = intimidation + proficiency_bonus;
-			std::cout << "Intimidation now: " << intimidation << std::endl << std::endl;
-			break;
-		case 7:
-			std::cout << "Perception before: " << perception << std::endl;
-			perception = perception + proficiency_bonus;
-			std::cout << "Perception now: " << perception << std::endl << std::endl;
-			break;
-		case 8:
-			std::cout << "Survival before: " << survival << std::endl;
-			survival = survival + proficiency_bonus;
-			std::cout << "Survival now: " << survival << std::endl << std::endl;
-			break;
-		default:
-			break;
-		}
-		std::cout << "Choose the second one: ";
-		int pro_choice2;
-		std::cin >> pro_choice2;
-		switch (pro_choice2)
-		{
-		case 1:
-			std::cout << "Acrobatics before: " << acrobatics << std::endl;
-			acrobatics = acrobatics + proficiency_bonus;
-			std::cout << "Acrobatics now: " << acrobatics << std::endl << std::endl;
-			break;
-		case 2:
-			std::cout << "Animal Handling before: " << animal_handling << std::endl;
-			animal_handling = animal_handling + proficiency_bonus;
-			std::cout << "Animal Handling now: " << animal_handling << std::endl << std::endl;
-			break;
-		case 3:
-			std::cout << "Athletics before: " << athletics << std::endl;
-			athletics = athletics + proficiency_bonus;
-			std::cout << "Athletics now: " << athletics << std::endl << std::endl;
-			break;
-		case 4:
-			std::cout << "History before: " << history << std::endl;
-			history = history + proficiency_bonus;
-			std::cout << "History now: " << history << std::endl << std::endl;
-			break;
-		case 5:
-			std::cout << "Insight before: " << insight << std::endl;
-			insight = insight + proficiency_bonus;
-			std::cout << "Insight now: " << insight << std::endl << std::endl;
-			break;
-		case 6:
-			std::cout << "Intimidation before: " << intimidation << std::endl;
-			intimidation = intimidation + proficiency_bonus;
-			std::cout << "Intimidation now: " << intimidation << std::endl << std::endl;
-			break;
-		case 7:
-			std::cout << "Perception before: " << perception << std::endl;
-			perception = perception + proficiency_bonus;
-			std::cout << "Perception now: " << perception << std::endl << std::endl;
-			break;
-		case 8:
-			std::cout << "Survival before: " << survival << std::endl;
-			survival = survival + proficiency_bonus;
-			std::cout << "Survival now: " << survival << std::endl << std::endl;
-			break;
-		default:
-			break;
-		}
-	}
+	std::ifstream classlist("classlist.txt");
 
-	else if (class_name == "Ranger" || class_name == "ranger" || class_name == "2")
+	if (classlist.is_open())
 	{
-	class_name = "Ranger";
-	health = 10 + mod_constitution;
-	saving_strength = saving_strength + proficiency_bonus;
-	saving_dexterity = saving_dexterity + proficiency_bonus;
-	std::cout << "You've chosen ranger class.\n"
-		<< "Your health is set to: " << health << std::endl << std::endl;
-	std::cout << "Please choose three skills:" << std::endl;
-		std::cout << "1. Animal Handling (Wisdom)\n"
-			<< "2. Athletics (Strenght)\n"
-			<< "3. Insight (Wisdom)\n"
-			<< "4. Investigetion (Intelligence)\n"
-			<< "5. Nature (Intelligence)\n"
-			<< "6. Perception (Wisdom)\n"
-			<< "7. Stealth (Dexterity)\n"
-			<< "8. Survival (Wisdom)\n"
-			<< "Choose the first one: ";
-		int pro_choice1;
-		std::cin >> pro_choice1;
-		switch (pro_choice1)
+		std::string line;
+		bool found = false;
+		while (!classlist.eof())
 		{
-		case 1:
-			std::cout << "Animal Handling before: " << animal_handling << std::endl;
-			animal_handling = animal_handling + proficiency_bonus;
-			std::cout << "Animal Handling now: " << animal_handling << std::endl << std::endl;
-			break;
-		case 2:
-			std::cout << "Athletics before: " << athletics << std::endl;
-			athletics = athletics + proficiency_bonus;
-			std::cout << "Athletics now: " << athletics << std::endl << std::endl;
-			break;
-		case 3:
-			std::cout << "Insight before: " << insight << std::endl;
-			insight = insight + proficiency_bonus;
-			std::cout << "Insight now: " << insight << std::endl << std::endl;
-			break;
-		case 4:
-			std::cout << "Investigetion before: " << investigation << std::endl;
-			investigation = investigation + proficiency_bonus;
-			std::cout << "Investigetion now: " << investigation << std::endl << std::endl;
-			break;
-		case 5:
-			std::cout << "Nature before: " << nature << std::endl;
-			nature = nature + proficiency_bonus;
-			std::cout << "Nature now: " << nature << std::endl << std::endl;
-			break;
-		case 6:
-			std::cout << "Perception before: " << perception << std::endl;
-			perception = perception + proficiency_bonus;
-			std::cout << "Perception now: " << perception << std::endl << std::endl;
-			break;
-		case 7:
-			std::cout << "Stealth before: " << stealth << std::endl;
-			stealth = stealth + proficiency_bonus;
-			std::cout << "Stealth now: " << stealth << std::endl << std::endl;
-			break;
-		case 8:
-			std::cout << "Survival before: " << survival << std::endl;
-			survival = survival + proficiency_bonus;
-			std::cout << "Survival now: " << survival << std::endl << std::endl;
-			break;
-		default:
-			break;
+			classlist >> line;
+			if (line == name)
+			{
+				classlist >> this->class_name
+					>> health
+					>> armor_name
+					>> weapon_name;
+				found = true;
+				//Add starting armor
+				Armor armor(armor_name);
+				inventory.fAddItem(armor);
+				inventory.fEquipArmor(armor);
+				armor_class = armor.fGetArmor();
+				//Add starting weapon
+				Weapon weapon(weapon_name);
+				inventory.fAddItem(weapon);
+				inventory.fEquipWeapon(weapon);
+				damage = weapon.fGetDamage();
+				roll_times = weapon.fGetTimes();
+				fGetStatsAll();
+			}
 		}
-		std::cout << "Choose the second one: ";
-		int pro_choice2;
-		std::cin >> pro_choice2;
-		switch (pro_choice2)
-		{
-		case 1:
-			std::cout << "Animal Handling before: " << animal_handling << std::endl;
-			animal_handling = animal_handling + proficiency_bonus;
-			std::cout << "Animal Handling now: " << animal_handling << std::endl << std::endl;
-			break;
-		case 2:
-			std::cout << "Athletics before: " << athletics << std::endl;
-			athletics = athletics + proficiency_bonus;
-			std::cout << "Athletics now: " << athletics << std::endl << std::endl;
-			break;
-		case 3:
-			std::cout << "Insight before: " << insight << std::endl;
-			insight = insight + proficiency_bonus;
-			std::cout << "Insight now: " << insight << std::endl << std::endl;
-			break;
-		case 4:
-			std::cout << "Investigetion before: " << investigation << std::endl;
-			investigation = investigation + proficiency_bonus;
-			std::cout << "Investigetion now: " << investigation << std::endl << std::endl;
-			break;
-		case 5:
-			std::cout << "Nature before: " << nature << std::endl;
-			nature = nature + proficiency_bonus;
-			std::cout << "Nature now: " << nature << std::endl << std::endl;
-			break;
-		case 6:
-			std::cout << "Perception before: " << perception << std::endl;
-			perception = perception + proficiency_bonus;
-			std::cout << "Perception now: " << perception << std::endl << std::endl;
-			break;
-		case 7:
-			std::cout << "Stealth before: " << stealth << std::endl;
-			stealth = stealth + proficiency_bonus;
-			std::cout << "Stealth now: " << stealth << std::endl << std::endl;
-			break;
-		case 8:
-			std::cout << "Survival before: " << survival << std::endl;
-			survival = survival + proficiency_bonus;
-			std::cout << "Survival now: " << survival << std::endl << std::endl;
-			break;
-		default:
-			break;
-		}
-		std::cout << "Choose the third one: ";
-		int pro_choice3;
-		std::cin >> pro_choice3;
-		switch (pro_choice3)
-		{
-		case 1:
-			std::cout << "Animal Handling before: " << animal_handling << std::endl;
-			animal_handling = animal_handling + proficiency_bonus;
-			std::cout << "Animal Handling now: " << animal_handling << std::endl << std::endl;
-			break;
-		case 2:
-			std::cout << "Athletics before: " << athletics << std::endl;
-			athletics = athletics + proficiency_bonus;
-			std::cout << "Athletics now: " << athletics << std::endl << std::endl;
-			break;
-		case 3:
-			std::cout << "Insight before: " << insight << std::endl;
-			insight = insight + proficiency_bonus;
-			std::cout << "Insight now: " << insight << std::endl << std::endl;
-			break;
-		case 4:
-			std::cout << "Investigetion before: " << investigation << std::endl;
-			investigation = investigation + proficiency_bonus;
-			std::cout << "Investigetion now: " << investigation << std::endl << std::endl;
-			break;
-		case 5:
-			std::cout << "Nature before: " << nature << std::endl;
-			nature = nature + proficiency_bonus;
-			std::cout << "Nature now: " << nature << std::endl << std::endl;
-			break;
-		case 6:
-			std::cout << "Perception before: " << perception << std::endl;
-			perception = perception + proficiency_bonus;
-			std::cout << "Perception now: " << perception << std::endl << std::endl;
-			break;
-		case 7:
-			std::cout << "Stealth before: " << stealth << std::endl;
-			stealth = stealth + proficiency_bonus;
-			std::cout << "Stealth now: " << stealth << std::endl << std::endl;
-			break;
-		case 8:
-			std::cout << "Survival before: " << survival << std::endl;
-			survival = survival + proficiency_bonus;
-			std::cout << "Survival now: " << survival << std::endl << std::endl;
-			break;
-		default:
-			break;
+		if(found == false)
+		{ 
+			std::cout << "Error. Write the name of the class." << std::endl;
+			fPickClass();
 		}
 	}
-
-	else if (class_name == "Sorcerer" || class_name == "sorcerer" || class_name == "3")
+	else
 	{
-	class_name = "Sorcerer";
-	health = 6 + mod_constitution;
-	saving_constitution = saving_constitution + proficiency_bonus;
-	saving_charisma = saving_charisma + proficiency_bonus;
-	std::cout << "You've chosen sorcerer class.\n"
-		<< "Your health is set to: " << health << std::endl << std::endl;
-	std::cout << "Please choose two skills:" << std::endl;
-		std::cout << "1. Arcana (Intelligence)\n"
-			<< "2. Deception (Charisma)\n"
-			<< "3. Insight (Wisdom)\n"
-			<< "4. Intimidation (Charisma)\n"
-			<< "5. Persuasion (Charisma)\n"
-			<< "6. Religion (Intelligence)\n"
-			<< "Choose the first one: ";
-		int pro_choice1;
-		std::cin >> pro_choice1;
-		switch (pro_choice1)
-		{
-		case 1:
-			std::cout << "Arcana before: " << arcana << std::endl;
-			arcana = arcana + proficiency_bonus;
-			std::cout << "Arcana now: " << arcana << std::endl << std::endl;
-			break;
-		case 2:
-			std::cout << "Deception before: " << deception << std::endl;
-			deception = deception + proficiency_bonus;
-			std::cout << "Deception now: " << deception << std::endl << std::endl;
-			break;
-		case 3:
-			std::cout << "Insight before: " << insight << std::endl;
-			insight = insight + proficiency_bonus;
-			std::cout << "Insight now: " << insight << std::endl << std::endl;
-			break;
-		case 4:
-			std::cout << "Intimidation before: " << intimidation << std::endl;
-			intimidation = intimidation + proficiency_bonus;
-			std::cout << "Intimidation now: " << intimidation << std::endl << std::endl;
-			break;
-		case 5:
-			std::cout << "Persuasion before: " << persuasion << std::endl;
-			persuasion = persuasion + proficiency_bonus;
-			std::cout << "Pesuasion now: " << persuasion << std::endl << std::endl;
-			break;
-		case 6:
-			std::cout << "Religion before: " << religion << std::endl;
-			religion = religion + proficiency_bonus;
-			std::cout << "Religion now: " << religion << std::endl << std::endl;
-			break;
-		default:
-			break;
-		}
-		std::cout << "Choose the second one: ";
-		int pro_choice2;
-		std::cin >> pro_choice2;
-		switch (pro_choice2)
-		{
-		case 1:
-			std::cout << "Arcana before: " << arcana << std::endl;
-			arcana = arcana + proficiency_bonus;
-			std::cout << "Arcana now: " << arcana << std::endl << std::endl;
-			break;
-		case 2:
-			std::cout << "Deception before: " << deception << std::endl;
-			deception = deception + proficiency_bonus;
-			std::cout << "Deception now: " << deception << std::endl << std::endl;
-			break;
-		case 3:
-			std::cout << "Insight before: " << insight << std::endl;
-			insight = insight + proficiency_bonus;
-			std::cout << "Insight now: " << insight << std::endl << std::endl;
-			break;
-		case 4:
-			std::cout << "Intimidation before: " << intimidation << std::endl;
-			intimidation = intimidation + proficiency_bonus;
-			std::cout << "Intimidation now: " << intimidation << std::endl << std::endl;
-			break;
-		case 5:
-			std::cout << "Persuasion before: " << persuasion << std::endl;
-			persuasion = persuasion + proficiency_bonus;
-			std::cout << "Pesuasion now: " << persuasion << std::endl << std::endl;
-			break;
-		case 6:
-			std::cout << "Religion before: " << religion << std::endl;
-			religion = religion + proficiency_bonus;
-			std::cout << "Religion now: " << religion << std::endl << std::endl;
-			break;
-		default:
-			break;
-		}
+		std::cout << "File failed to load." << std::endl;
 	}
-	
-	else 
-	{
-		std::cout << "Error. Please select one of the given classes" << std::endl;
-		fPickClass();
-	}
+	classlist.close();
 }
 
 int Player::fNoNull(int value)

@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "Enemy.h"
 
 class Logic
 {
@@ -14,6 +15,7 @@ public:
 	//Game functions
 	void fMainMenu();
 	void fNewGame();
+	void fBattle(Enemy& enemy);
 	
 	//Story functions
 
