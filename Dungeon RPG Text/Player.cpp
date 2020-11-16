@@ -231,7 +231,6 @@ void Player::fInsertName()
 
 
 //Behind the scene functions
-
 void Player::fLoadClasses(std::string name)
 {
 	std::ifstream classlist("classlist.txt");
@@ -261,7 +260,7 @@ void Player::fLoadClasses(std::string name)
 				inventory.fEquipWeapon(weapon);
 				damage = weapon.fGetDamage();
 				roll_times = weapon.fGetTimes();
-				fGetStatsAll();
+				fChooseProfSkill(name);
 			}
 		}
 		if(found == false)
@@ -276,6 +275,42 @@ void Player::fLoadClasses(std::string name)
 	}
 	classlist.close();
 }
+
+void Player::fChooseProfSkill(std::string name)
+{
+	if (name == "Fighter")
+	{ 
+		std::vector<std::string> string_skills = { "Acrobatics", "Animal handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival" };
+		std::vector<int*> int_skills = { &acrobatics, &animal_handling, &athletics, &history, &insight, &intimidation, &perception, &survival };
+	
+		int choice = 0;
+		std::cout << "Choose two skills: \n" << std::endl;
+
+		for (size_t i = 0; i < string_skills.size(); i++)
+		{
+			std::cout << i << " - " << string_skills[i] << std::endl;
+		}
+
+		std::cin >> choice;
+
+		*int_skills[choice] += proficiency_bonus;
+		std::cout << string_skills[choice] << " is now " << *int_skills[choice] << ".\n" << std::endl;
+
+		string_skills.erase(string_skills.begin() + choice);
+		*int_skills.erase(int_skills.begin() + choice);
+
+		for (size_t i = 0; i < string_skills.size(); i++)
+		{
+			std::cout << i << " - " << string_skills[i] << std::endl;
+		}
+
+		std::cin >> choice;
+
+		*int_skills[choice] += proficiency_bonus;
+		std::cout << string_skills[choice] << " is now " << *int_skills[choice] << ".\n" << std::endl;
+	}
+}
+
 
 int Player::fNoNull(int value)
 {

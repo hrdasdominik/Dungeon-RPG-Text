@@ -68,7 +68,7 @@ void Logic::fBattle(Enemy& enemy)
 			if (enemy.fRollHit() > player.fGetAC())
 			{
 				player.fTakeDamage(enemy.fRollDamage());
-				std::cout << player.fGetName() << " has left " 
+				std::cout << player.fGetName() << " has left "
 					<< player.fGetHealth() << " health." << std::endl;
 			}
 			else
@@ -104,6 +104,8 @@ void Logic::fBattle(Enemy& enemy)
 			}
 		}
 	}
+	else
+		fBattle(enemy);
 	
 }
 

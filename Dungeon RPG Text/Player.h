@@ -51,6 +51,7 @@ public:
 private: 
 	//Behind the scene functions
 	void fLoadClasses(std::string name);
+	void fChooseProfSkill(std::string name);
 	int fNoNull(int value);
 
 private:
@@ -59,7 +60,7 @@ private:
 	Weapon* weapon;
 	Inventory inventory;
 
-	//Arrays
+	//Containers
 	int AttributeMod[20] = { -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5};
 	int ProficiencyBonus[20] = { 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5 };
 	int required_experience[11] = { 0, 45, 95, 145, 210, 285, 380, 495, 610, 745, 9999999 };
