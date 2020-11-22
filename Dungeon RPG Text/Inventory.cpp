@@ -44,7 +44,7 @@ int Inventory::fEquipWeapon(Item& item)
 {
 	if (weaponSlot.size() == 0)
 	{
-		if (item.fGetId() == weapon.fGetId())
+		if (item.fGetId() == "Weapon")
 		{
 			Weapon* wp = dynamic_cast<Weapon*>(&item);
 			fAddWeapon(*wp);
@@ -79,7 +79,7 @@ int Inventory::fEquipArmor(Item& item)
 {
 	if (armorSlot.size() == 0)
 	{
-		if (item.fGetId() == armor.fGetId())
+		if (item.fGetId() == "Armor")
 		{
 			Armor* ar = dynamic_cast<Armor*>(&item);
 			fAddArmor(*ar);

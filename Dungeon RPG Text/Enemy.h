@@ -10,13 +10,10 @@ public:
 	inline const bool& fGetAlive() const { return alive; }
 	inline const std::string& fGetName() const { return name; }
 	inline const int& fGetHealth() const { return health; }
-	inline const int& fGetAC() const { return armor_class; }
+	inline const int& fGetAC() const { return armor; }
 	inline const int& fGetInitiative() const { return initiative; }
 	inline const int& fGetLevel() const { return level; }
 	inline const int& fGetExpDrop() const { return exp_drop; }
-
-	//Modifiers
-
 
 	//Functions
 	int fRollInitiative();
@@ -26,7 +23,7 @@ public:
 
 private:
 	//Behind the scene functions
-	void fLoadList(std::string name);
+	void fReadFromSQL(std::string name);
 
 	//Objects
 	Dice* dice;
@@ -38,7 +35,7 @@ private:
 	bool alive;
 	std::string name;
 	int health;
-	int armor_class;
+	int armor;
 	int initiative;
 	int level;
 	int exp_drop;

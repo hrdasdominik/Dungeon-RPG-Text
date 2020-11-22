@@ -44,7 +44,5 @@ private:
 
 	//Pointers & objects
 	Item item;
-	Weapon weapon;
-	Armor armor;
 };
 

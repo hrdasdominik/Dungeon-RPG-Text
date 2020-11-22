@@ -146,6 +146,7 @@
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="sqlite3\sqlite3.c" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,11 +160,8 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="armorlist.txt" />
     <Text Include="classlist.txt" />
-    <Text Include="enemylist.txt" />
     <Text Include="itemlist.txt" />
-    <Text Include="weaponlist.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

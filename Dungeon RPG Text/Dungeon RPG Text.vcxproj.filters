@@ -42,6 +42,9 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sqlite3\sqlite3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h">
@@ -70,19 +73,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="enemylist.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="classlist.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="itemlist.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="weaponlist.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="armorlist.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

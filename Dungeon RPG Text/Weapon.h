@@ -4,7 +4,7 @@
 class Weapon : public Item
 {
 public:
-	Weapon(std::string name = "None", int damage = 0, int times = 0, std::string id = "Weapon");
+	Weapon(std::string name, std::string id = "Weapon");
 	virtual ~Weapon() {};
 
 	//Accessor
@@ -15,10 +15,10 @@ public:
 	inline int& fSetDamage(int& damage) { return this->damage = damage; }
 	inline int& fSetTimes(int& times) { return this->times = times; }
 
-
-	//Functions
-
 private:
+	//Behind the scene functions
+	void fReadFromSQL(std::string name);
+
 	int damage;
 	int times;
 };

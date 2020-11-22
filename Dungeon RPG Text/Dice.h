@@ -12,6 +12,7 @@
 #include <numeric>
 #include <typeinfo>
 #include <map>
+#include "sqlite3/sqlite3.h"
 
 class Dice
 {

@@ -1,8 +1,0 @@
-Goblin 
-Goblin 7 15 1 50 6 1 2 8 14 10 10 8 8 4
-
-GoblinBoss 
-Goblin_Boss 21 17 3 200 6 2 2 10 14 10 10 8 10 4
-
-Hobgoblin
-Hobgoblin 11 18 2 100 8 1 1 13 12 12 10 10 9 3
