@@ -1,5 +1,0 @@
-Fighter
-Fighter 10 Chain-mail Long-sword 
-
-Ranger
-Ranger 10 Leather Short-sword

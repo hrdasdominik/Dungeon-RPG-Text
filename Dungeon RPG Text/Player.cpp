@@ -140,6 +140,17 @@ void Player::fUnEquipArmor()
 }
 
 //Player creation
+void Player::fPlayerCreation()
+{
+	std::cout << std::endl;
+	std::string name;
+	std::cout << "Enter your name: ";
+	std::cin >> name;
+	fInitialize(name);
+	fGetStatsAttributes();
+	fPickClass();
+}
+
 void Player::fInitialize(std::string name)
 {
 	//Attributes
@@ -203,7 +214,9 @@ void Player::fInitialize(std::string name)
 bool Player::fIsAlive()
 {
 	if (health <= 0)
+	{ 
 		return alive == false;
+	}
 	else
 		return alive == true;
 }
@@ -211,70 +224,124 @@ bool Player::fIsAlive()
 void Player::fPickClass()
 {
 	std::cout << "== Pick a class ==" << std::endl;
-	std::cout << "Fighter\n";
-	std::cout << "Ranger\n";
+	std::cout << "Fighter (Strength, Constitution)\n";
+	std::cout << "Ranger (Strength, Dexterity)\n";
+	std::cout << "== Write the name of the class as written ==" << std::endl;
 	std::cout << "Enter: ";
 	std::string choice;
 	std::cin >> choice;
 	std::cout << std::endl;
-	fLoadClasses(choice);
+	fReadFromSQL(choice);
 }
 
-void Player::fInsertName()
-{
-	std::cout << std::endl;
-	std::string name;
-	std::cout << "Enter your name: ";
-	std::cin >> name;
-	fInitialize(name);
-}
+
 
 
 //Behind the scene functions
-void Player::fLoadClasses(std::string name)
+void Player::fReadFromSQL(std::string name)
 {
-	std::ifstream classlist("classlist.txt");
+	
+		sqlite3* db;
+		sqlite3_stmt* stmt = 0;
+		std::string sql = "SELECT NAME, HEALTH, ARMOR, WEAPON FROM CLASS WHERE NAME = ?";
 
-	if (classlist.is_open())
-	{
-		std::string line;
-		bool found = false;
-		while (!classlist.eof())
+		int rc = sqlite3_open("database.db", &db);
+		if (rc != SQLITE_OK)
+			std::cout << "Error opening database." << std::endl;
+
+		rc = sqlite3_prepare_v2(db, sql.c_str(), sql.length(), &stmt, nullptr);
+
+		rc = sqlite3_bind_text(stmt, 1, name.c_str(), name.length(), SQLITE_STATIC);
+		
+		if (rc != SQLITE_OK)
 		{
-			classlist >> line;
-			if (line == name)
+			std::string errmsg(sqlite3_errmsg(db));
+			sqlite3_finalize(stmt);
+			throw errmsg;
+		}
+
+		rc = sqlite3_step(stmt);
+
+		if (rc != SQLITE_ROW && rc != SQLITE_DONE)
+		{
+			std::string errmsg(sqlite3_errmsg(db));
+			sqlite3_finalize(stmt);
+			throw errmsg;
+		}
+		
+		try
+		{
+			if (rc == SQLITE_DONE)
 			{
-				classlist >> this->class_name
-					>> health
-					>> armor_name
-					>> weapon_name;
-				found = true;
-				//Add starting armor
-				Armor armor(armor_name);
-				inventory.fAddItem(armor);
-				inventory.fEquipArmor(armor);
-				armor_class = armor.fGetArmor();
-				//Add starting weapon
-				Weapon weapon(weapon_name);
-				inventory.fAddItem(weapon);
-				inventory.fEquipWeapon(weapon);
-				damage = weapon.fGetDamage();
-				roll_times = weapon.fGetTimes();
-				fChooseProfSkill(name);
+				sqlite3_finalize(stmt);
+				throw std::string("Class not found");
 			}
 		}
-		if(found == false)
-		{ 
-			std::cout << "Error. Write the name of the class." << std::endl;
+
+		catch (...)
+		{
+			std::cout << "Error. Please write the name of the class from the list below." << std::endl;
 			fPickClass();
 		}
-	}
-	else
-	{
-		std::cout << "File failed to load." << std::endl;
-	}
-	classlist.close();
+		this->name = name;
+		this->health = sqlite3_column_int(stmt, 1);
+		this->armor_name = (char*)sqlite3_column_text(stmt, 2);
+		this->weapon_name = (char*)sqlite3_column_text(stmt, 3);
+
+		//Add starting armor
+		Armor armor(armor_name);
+		inventory.fAddItem(armor);
+		inventory.fEquipArmor(armor);
+		armor_class = armor.fGetArmor();
+		//Add starting weapon
+		Weapon weapon(weapon_name);
+		inventory.fAddItem(weapon);
+		inventory.fEquipWeapon(weapon);
+		damage = weapon.fGetDamage();
+		roll_times = weapon.fGetTimes();
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+
+		fChooseProfSkill(this->name);
 }
+
+static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
+	int i;
+	for (i = 0; i < argc; i++) {
+		std::cout << i << " " << argv[i] << std::endl;
+	}
+	return 0;
+}
+
+/*void Player::fChooseProfSkill(std::string name)
+{
+	sqlite3* db;
+	char* zErrMsg = 0;
+	char* sql;
+
+	if (name == "Fighter")
+		sql = (char*)"SELECT NAME FROM SKILLS WHERE FIGHTER = 1";
+	else if (name == "Ranger")
+		sql = (char*)"SELECT NAME FROM SKILLS WHERE RANGER = 1";
+	else
+		sql = nullptr;
+
+	int rc = sqlite3_open("database.db", &db);
+	if (rc != SQLITE_OK)
+		std::cout << "Error opening database." << std::endl;
+
+	rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK) {
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	}
+	else {
+		fprintf(stdout, "Operation done successfully\n");
+	}
+
+	sqlite3_close(db);
+}*/
 
 void Player::fChooseProfSkill(std::string name)
 {
@@ -282,7 +349,10 @@ void Player::fChooseProfSkill(std::string name)
 	{ 
 		std::vector<std::string> string_skills = { "Acrobatics", "Animal handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival" };
 		std::vector<int*> int_skills = { &acrobatics, &animal_handling, &athletics, &history, &insight, &intimidation, &perception, &survival };
-	
+		
+		mod_strength += proficiency_bonus;
+		mod_constitution += proficiency_bonus;
+
 		int choice = 0;
 		std::cout << "Choose two skills: \n" << std::endl;
 

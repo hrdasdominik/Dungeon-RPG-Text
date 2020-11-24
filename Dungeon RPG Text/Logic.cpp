@@ -36,9 +36,7 @@ void Logic::fMainMenu()
 
 void Logic::fNewGame()
 {
-	player.fInsertName();
-	player.fGetStatsAttributes();
-	player.fPickClass();
+	player.fPlayerCreation();
 	Enemy enemy("Goblin");
 	fBattle(enemy);
 }
@@ -47,7 +45,7 @@ void Logic::fBattle(Enemy& enemy)
 {
 	if (player.fRollInitiative() > enemy.fRollInitiative())
 	{
-		while (player.fGetAlive() == true && enemy.fGetAlive() == true)
+		while (player.fIsAlive() == true && enemy.fIsAlive() == true)
 		{
 
 			std::cout << "You see " << enemy.fGetName() << ".\n"
@@ -77,7 +75,7 @@ void Logic::fBattle(Enemy& enemy)
 	}
 	else if (player.fRollInitiative() < enemy.fRollInitiative())
 	{
-		while (player.fGetAlive() == true && enemy.fGetAlive() == true)
+		while (player.fIsAlive() == true && enemy.fIsAlive() == true)
 		{
 			if (enemy.fRollHit() > player.fGetAC())
 			{
@@ -97,7 +95,8 @@ void Logic::fBattle(Enemy& enemy)
 				if (player.fRollHit() > enemy.fGetAC())
 				{
 					enemy.fTakeDamage(player.fRollDamage());
-					std::cout << enemy.fGetHealth() << std::endl;
+					std::cout << enemy.fGetName() << " has left "
+						<< enemy.fGetHealth() << " health." << std::endl;
 				}
 				else
 					std::cout << player.fGetName() << " has missed." << std::endl;
@@ -106,6 +105,5 @@ void Logic::fBattle(Enemy& enemy)
 	}
 	else
 		fBattle(enemy);
-	
 }
 

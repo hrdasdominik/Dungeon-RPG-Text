@@ -28,10 +28,10 @@ public:
 	void fUnEquipArmor();
 	
 	//Player creation
+	void fPlayerCreation();
 	void fInitialize(std::string name);
 	bool fIsAlive();
 	void fPickClass();
-	void fInsertName();
 
 	//Accessors
 	inline const bool& fGetAlive() const { return alive; }
@@ -50,7 +50,7 @@ public:
 
 private: 
 	//Behind the scene functions
-	void fLoadClasses(std::string name);
+	void fReadFromSQL(std::string name);
 	void fChooseProfSkill(std::string name);
 	int fNoNull(int value);
 

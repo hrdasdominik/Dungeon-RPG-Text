@@ -17,6 +17,7 @@ public:
 
 	//Functions
 	int fRollInitiative();
+	bool fIsAlive();
 	inline void fTakeDamage(int damage) { health -= damage; }
 	inline int fRollHit() const { return dice->fRoll(20, 1) + bonus_hit; }
 	inline int fRollDamage() const { return dice->fRoll(damage, damage_time) + additional_damage; }
@@ -24,6 +25,7 @@ public:
 private:
 	//Behind the scene functions
 	void fReadFromSQL(std::string name);
+	int fNoNull(int value);
 
 	//Objects
 	Dice* dice;

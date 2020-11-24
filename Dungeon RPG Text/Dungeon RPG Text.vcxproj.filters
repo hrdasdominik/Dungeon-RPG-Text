@@ -73,9 +73,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="classlist.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="itemlist.txt">
       <Filter>Resource Files</Filter>
     </Text>

@@ -1,2 +1,5 @@
-﻿  Main.cpp
+﻿  Enemy.cpp
+  Player.cpp
+C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Dungeon RPG Text\Player.cpp(368,3): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Generating Code...
   Dungeon RPG Text.vcxproj -> C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Debug\Dungeon RPG Text.exe

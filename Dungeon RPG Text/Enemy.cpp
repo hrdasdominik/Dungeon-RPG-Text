@@ -22,17 +22,26 @@ Enemy::Enemy(std::string name)
 
 	//Skills
 	alive = true;
-	initiative = mod_dexterity;
+	initiative = 0;
 }
 
 //Functions
 int Enemy::fRollInitiative()
 {
-	return dice->fRoll(20, 1) + mod_dexterity;
+	return initiative = dice->fRoll(20, 1) + mod_dexterity;
+}
+
+bool Enemy::fIsAlive()
+{
+    if (health <= 0)
+    { 
+        return alive == false;
+    }
+    else
+        return alive == true;
 }
 
 //Behind the scene functions
-
 void Enemy::fReadFromSQL(std::string name)
 {
     sqlite3* db;
@@ -84,4 +93,10 @@ void Enemy::fReadFromSQL(std::string name)
 
     sqlite3_finalize(stmt);
     sqlite3_close(db);
+}
+
+int Enemy::fNoNull(int value)
+{
+    value = (value < 0) ? 0 : value;
+    return value;
 }
