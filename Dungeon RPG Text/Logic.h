@@ -14,6 +14,7 @@ public:
 	void fNewGame();
 
 	//Mechanics
+	bool fGameRunning();
 	
 	//Story functions
 
@@ -23,7 +24,7 @@ public:
 	//Modifiers
 
 private:
-
+	
 	int choice;
 	bool playing;
 

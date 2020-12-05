@@ -57,7 +57,6 @@ int Enemy::fAction()
         }
         else
         {
-            std::cout << name << " has run away." << std::endl;
             Enemy::~Enemy();
             return 0;
         }

@@ -96,6 +96,33 @@ int Player::fRollInitiative()
 	return dice->fRoll(20, 1) + mod_dexterity;
 }
 
+int Player::fAction()
+{
+	int choice;
+	std::cout << "1. Attack\n"
+			  << "2. Skill\n"
+			  << "3. Inventory\n"
+			  << "4. Run away\n"
+			  << "Choose: ";
+	std::cin >> choice;
+	switch (choice)
+	{
+	case 1:
+		return fRollHit();
+		break;
+	case 2:
+		return 0;
+		break;
+	case 3:
+		return 0;
+		break;
+	case 4:
+		return 0;
+		break;
+	}
+	return 0;
+}
+
 
 //Inventory
 void Player::fListItem()
@@ -215,7 +242,7 @@ bool Player::fIsAlive()
 {
 	if (health <= 0)
 	{ 
-		std::cout << name << " is dead.\n Game over." << std::endl;
+		std::cout << name << " is dead." << std::endl;
 		return alive == false;
 	}
 	else
@@ -281,7 +308,7 @@ void Player::fReadFromSQL(std::string name)
 			std::cout << "Error. Please write the name of the class from the list below." << std::endl;
 			fPickClass();
 		}
-		this->name = name;
+		class_name = name;
 		this->health = sqlite3_column_int(stmt, 1);
 		this->armor_name = (char*)sqlite3_column_text(stmt, 2);
 		this->weapon_name = (char*)sqlite3_column_text(stmt, 3);
@@ -300,7 +327,7 @@ void Player::fReadFromSQL(std::string name)
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 
-		fChooseProfSkill(this->name);
+		fChooseProfSkill(class_name);
 }
 
 static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
@@ -341,6 +368,7 @@ static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
 	sqlite3_close(db);
 }*/
 
+//skill tree treba rijesit kroz baze nekak
 void Player::fChooseProfSkill(std::string name)
 {
 	if (name == "Fighter")
@@ -378,7 +406,6 @@ void Player::fChooseProfSkill(std::string name)
 		std::cout << string_skills[choice] << " is now " << *int_skills[choice] << ".\n" << std::endl;
 	}
 }
-
 
 int Player::fNoNull(int value)
 {

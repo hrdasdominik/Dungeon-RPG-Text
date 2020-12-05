@@ -6,7 +6,7 @@ int main()
 
 	Logic logic;
 
-	while (logic.fGetPlaying())
+	while (logic.fGameRunning() == true)
 	{
 		logic.fMainMenu();
 	}

@@ -1,10 +1,13 @@
 #include "Combat.h"
 
-void Combat::fTurnOrder(Enemy& enemy, Enemy& enemy2)
+void Combat::fTurnRoll(Player& player, Enemy& enemy, Enemy& enemy2)
 {
-	
+	int presult = player.fRollInitiative();
+	std::cout << player.fGetName() << " has rolled " << presult << "." << std::endl;
 	int result1 = enemy.fRollInitiative();
+	std::cout << enemy.fGetName() << " has rolled " << result1 << "." << std::endl;
 	int result2 = enemy2.fRollInitiative();
+	std::cout << enemy2.fGetName() << " has rolled " << result2 << "." << std::endl;
 
 	if (result1 > result2)
 	{
@@ -18,7 +21,8 @@ void Combat::fTurnOrder(Enemy& enemy, Enemy& enemy2)
 	}
 	else
 	{
-		fTurnOrder(enemy, enemy2);
+		lOrder.emplace_back(enemy);
+		lOrder.emplace_back(enemy2);
 	}
 }
 
@@ -29,163 +33,88 @@ void Combat::fBattle(Player& player, Enemy& enemy)
 
 void Combat::fBattle(Player& player, Enemy& enemy, Enemy& enemy2)
 {
-	fTurnOrder(enemy, enemy2);
-	player.fRollInitiative();
+	fTurnRoll(player, enemy, enemy2);
 	while (player.fIsAlive() == true && (enemy.fIsAlive() == true || enemy2.fIsAlive() == true))
 	{
-		//If first enemy is alive
-		if (lOrder.front().fGetAlive() == true)
+		std::cout << "\nTurn: " << turn << ".\n" << std::endl;
+
+		if (player.fGetInitiative() >= lOrder.front().fGetInitiative())
 		{
-			if (lOrder.front().fGetInitiative() > player.fGetInitiative())
-			{
-				//First enemy action
-				std::cout << enemy.fGetName() << " is first to act." << std::endl;
-				int result = enemy.fAction();
-				if (result > 0)
-				{
-					if (result >= player.fGetAC())
-					{
-						int damage = enemy.fRollDamage();
-						player.fTakeDamage(damage);
-						std::cout << player.fGetName() << " has been hit for " << damage << " points." << std::endl;
-						std::cout << player.fGetName() << " has left " << player.fGetHealth() << " health points.\n" << std::endl;
-						player.fIsAlive();
-					}
-					else
-					{
-						std::cout << enemy.fGetName() << " has missed you.\n" << std::endl;
-					}
-				}
-
-				//If second enemy is alive
-				if (lOrder.back().fGetAlive() == true)
-				{ 
-					if (lOrder.back().fGetInitiative() > player.fGetInitiative())
-					{
-						//Second enemy action
-						std::cout << enemy2.fGetName() << " is second to act." << std::endl;
-						int result = enemy2.fAction();
-						if (result > 0)
-						{
-							if (result >= player.fGetAC())
-							{
-								int damage = enemy2.fRollDamage();
-								player.fTakeDamage(damage);
-								std::cout << player.fGetName() << " has been hit for " << damage << " points." << std::endl;
-								std::cout << player.fGetName() << " has left " << player.fGetHealth() << " health points.\n" << std::endl;
-								player.fIsAlive();
-							}
-							else
-							{
-								std::cout << enemy2.fGetName() << " has missed you.\n" << std::endl;
-							}
-						}
-						//Player turn
-						std::cout << player.fGetName() << " is third to act." << std::endl;
-						std::string choice;
-						std::cin >> choice;
-					}
-					else
-					{
-						//Player Turn
-						std::cout << player.fGetName() << " is second to act." << std::endl;
-						//Second enemy action
-						std::cout << enemy2.fGetName() << " is third to act." << std::endl;
-						int result = enemy2.fAction();
-						if (result > 0)
-						{
-							if (result >= player.fGetAC())
-							{
-								int damage = enemy.fRollDamage();
-								player.fTakeDamage(damage);
-								std::cout << player.fGetName() << " has been hit for " << damage << " points." << std::endl;
-								std::cout << player.fGetName() << " has left " << player.fGetHealth() << " health points.\n" << std::endl;
-								player.fIsAlive();
-							}
-							else
-							{
-								std::cout << enemy2.fGetName() << " has missed you.\n" << std::endl;
-							}
-						}
-					}
-				}
-				else //If second enemy is dead
-				{
-					//Player Turn
-					std::cout << player.fGetName() << " is second to act." << std::endl;
-					std::string choice;
-					std::cin >> choice;
-				}
-			}
-			else if (lOrder.front().fGetInitiative() < player.fGetInitiative())
-			{
-				//Player action
-				std::cout << player.fGetName() << " is first to act." << std::endl;
-				std::string choice;
-				std::cin >> choice;
-
-				if (enemy.fGetAlive() == true)
-				{
-					//First enemy action
-					std::cout << enemy.fGetName() << " is second to act." << std::endl;
-					int result = enemy.fAction();
-					if (result > 0)
-					{
-						if (result >= player.fGetAC())
-						{
-							int damage = enemy.fRollDamage();
-							player.fTakeDamage(damage);
-							std::cout << player.fGetName() << " has been hit for " << damage << " points." << std::endl;
-							std::cout << player.fGetName() << " has left " << player.fGetHealth() << " health points.\n" << std::endl;
-							player.fIsAlive();
-						}
-						else
-						{
-							std::cout << enemy.fGetName() << " has missed you.\n" << std::endl;
-						}
-					}
-				}
-
-				if (enemy2.fGetAlive() == true)
-				{
-					//Second enemy action
-					std::cout << enemy2.fGetName() << " is second to act." << std::endl;
-					int result = enemy2.fAction();
-					if (result > 0)
-					{
-						if (result >= player.fGetAC())
-						{
-							int damage = enemy2.fRollDamage();
-							player.fTakeDamage(damage);
-							std::cout << player.fGetName() << " has been hit for " << damage << " points." << std::endl;
-							std::cout << player.fGetName() << " has left " << player.fGetHealth() << " health points.\n" << std::endl;
-							player.fIsAlive();
-						}
-						else
-						{
-							std::cout << enemy2.fGetName() << " has missed you.\n" << std::endl;
-						}
-					}
-				}
-			}
+			fPlayerAction(player, enemy, enemy2);
+			fEnemyAction(enemy, player);
+			if (player.fGetHealth() <= 0)
+				break;
+			fEnemyAction(enemy2, player);
+			if (player.fGetHealth() <= 0)
+				break;
+			turn++;
+		}
+		else if (lOrder.front().fGetInitiative() > player.fGetInitiative() && player.fGetInitiative() >= lOrder.back().fGetInitiative())
+		{
+			fEnemyAction(enemy, player);
+			if (player.fGetHealth() <= 0)
+				break;
+			fPlayerAction(player, enemy, enemy2);
+			fEnemyAction(enemy2, player);
+			if (player.fGetHealth() <= 0)
+				break;
+			turn++;
+		}
+		else
+		{
+			std::cout << "2. " << lOrder.back().fGetName() << " | " << lOrder.back().fGetInitiative() << std::endl;
+			fEnemyAction(enemy, player);
+			if (player.fGetHealth() <= 0)
+				break;
+			fEnemyAction(enemy2, player);
+			if (player.fGetHealth() <= 0)
+				break;
+			fPlayerAction(player, enemy, enemy2);
+			turn++;
 		}
 	}
 }
 
-/*
-			int result = enemy.fAction();
-			if (result > 0)
-			{
-				if (result >= player.fGetAC())
-				{
-					int damage = enemy.fRollDamage();
-					player.fTakeDamage(damage);
-					std::cout << player.fGetName() << " has been hit for " << damage << " points." << std::endl;
-					std::cout << player.fGetName() << " has left " << player.fGetHealth() << " health points.\n" << std::endl;
-				}
-				else
-				{
-					std::cout << enemy.fGetName() << " has missed you.\n" << std::endl;
-				}
-			}
-*/
+void Combat::fEnemyAction(Enemy& enemy, Player& player)
+{
+	if (enemy.fGetAlive() == true)
+	{
+		if (enemy.fAction() >= player.fGetAC())
+		{
+			std::cout << enemy.fGetName()
+					<< " successfully hit "
+					<< player.fGetName()
+					<< "." << std::endl;
+
+			int damage = enemy.fRollDamage();
+			player.fTakeDamage(damage);
+			
+			std::cout << player.fGetName()
+					<< " was hit for "
+					<< damage
+					<< " points of damage." << std::endl;
+			std::cout << player.fGetName()
+					<< " has left "
+					<< player.fGetHealth()
+					<< " health points.\n" << std::endl;
+		}
+		else if (enemy.fAction() == 0)
+		{
+			std::cout << enemy.fGetName() << " has run away." << std::endl;
+		}
+		else
+		{
+			std::cout << enemy.fGetName() << " has missed " << player.fGetName() << " .\n" << std::endl;
+		}
+	}
+}
+
+void Combat::fPlayerAction(Player& player, Enemy& enemy, Enemy& enemy2)
+{
+	if (player.fIsAlive() == true)
+	{
+		std::cout << player.fGetName() << " turn." << std::endl;
+
+		int damage = player.fAction();
+	}
+}

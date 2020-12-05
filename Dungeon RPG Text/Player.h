@@ -15,6 +15,7 @@ public:
 	void fGetStatsAttributes() const;
 	void fGetStatsAll() const;
 	int fRollInitiative();
+	int fAction();
 	inline int fRollHit() const { return dice->fRoll(20, 1) + proficiency_bonus; }
 	inline void fTakeDamage(int damage) { health -= damage; }
 	inline int fRollDamage() const { return dice->fRoll(damage, roll_times); }

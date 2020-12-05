@@ -43,4 +43,12 @@ void Logic::fNewGame()
 	combat.fBattle(player, enemy, enemy2);
 }
 
-//Mechanics
+bool Logic::fGameRunning()
+{
+	if (player.fGetAlive() == false)
+	{
+		return false;
+	}
+	else
+		return true;
+}
