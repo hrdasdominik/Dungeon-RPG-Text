@@ -34,12 +34,12 @@ public:
 	void fPickClass();
 
 	//Accessors
-	inline const bool& fGetAlive() const { return alive; }
+	inline const bool& fGetAlive() { fIsAlive(); return alive; }
 	inline const std::string& fGetName() const { return name; }
 	inline const std::string& fGetClass() const { return class_name; }
 	inline const int& fGetHealth() const { return health; }
 	inline const int& fGetAC() const { return armor_class; }
-	inline const int& fGetINT() const { return initiative; }
+	inline const int& fGetInitiative() const { return initiative; }
 	inline const int& fGetExp() const { return exp; }
 	inline const int& fGetLevel() const { return level; }
 	inline const int& fGetPB() const { return proficiency_bonus; }

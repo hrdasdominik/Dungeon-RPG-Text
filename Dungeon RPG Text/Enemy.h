@@ -7,7 +7,7 @@ public:
 	virtual ~Enemy() {};
 
 	//Accessors
-	inline const bool& fGetAlive() const { return alive; }
+	inline const bool& fGetAlive() { fIsAlive(); return alive; }
 	inline const std::string& fGetName() const { return name; }
 	inline const int& fGetHealth() const { return health; }
 	inline const int& fGetAC() const { return armor; }
@@ -18,6 +18,7 @@ public:
 	//Functions
 	int fRollInitiative();
 	bool fIsAlive();
+	int fAction();
 	inline void fTakeDamage(int damage) { health -= damage; }
 	inline int fRollHit() const { return dice->fRoll(20, 1) + bonus_hit; }
 	inline int fRollDamage() const { return dice->fRoll(damage, damage_time) + additional_damage; }

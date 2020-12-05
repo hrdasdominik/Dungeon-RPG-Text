@@ -13,6 +13,8 @@
 #include <typeinfo>
 #include <map>
 #include <exception>
+#include <list>
+#include <iterator>
 #include "sqlite3/sqlite3.h"
 
 class Dice

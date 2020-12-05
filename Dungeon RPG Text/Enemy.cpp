@@ -35,10 +35,33 @@ bool Enemy::fIsAlive()
 {
     if (health <= 0)
     { 
+        std::cout << name << " is dead." << std::endl;
         return alive == false;
     }
     else
         return alive == true;
+}
+
+int Enemy::fAction()
+{
+    if (health >= (health / 3))
+    {
+        return fRollHit();
+    }
+    else
+    {
+        int result = rand() % 100 + 1;
+        if (result > 13)
+        {
+            return fRollHit();
+        }
+        else
+        {
+            std::cout << name << " has run away." << std::endl;
+            Enemy::~Enemy();
+            return 0;
+        }
+    }
 }
 
 //Behind the scene functions

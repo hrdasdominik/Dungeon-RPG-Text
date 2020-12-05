@@ -1,6 +1,5 @@
 #pragma once
-#include "Player.h"
-#include "Enemy.h"
+#include "Combat.h"
 
 class Logic
 {
@@ -11,11 +10,10 @@ public:
 	//Operators
 
 	//Functions
-	
-	//Game functions
 	void fMainMenu();
 	void fNewGame();
-	void fBattle(Enemy& enemy);
+
+	//Mechanics
 	
 	//Story functions
 
@@ -31,5 +29,6 @@ private:
 
 	//Player related
 	Player player;
+	Combat combat;
 };
 

@@ -215,6 +215,7 @@ bool Player::fIsAlive()
 {
 	if (health <= 0)
 	{ 
+		std::cout << name << " is dead.\n Game over." << std::endl;
 		return alive == false;
 	}
 	else
@@ -233,9 +234,6 @@ void Player::fPickClass()
 	std::cout << std::endl;
 	fReadFromSQL(choice);
 }
-
-
-
 
 //Behind the scene functions
 void Player::fReadFromSQL(std::string name)
@@ -360,10 +358,10 @@ void Player::fChooseProfSkill(std::string name)
 		{
 			std::cout << i << " - " << string_skills[i] << std::endl;
 		}
-
+		
 		std::cin >> choice;
-
 		*int_skills[choice] += proficiency_bonus;
+		
 		std::cout << string_skills[choice] << " is now " << *int_skills[choice] << ".\n" << std::endl;
 
 		string_skills.erase(string_skills.begin() + choice);
