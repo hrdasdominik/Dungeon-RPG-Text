@@ -17,6 +17,7 @@ private:
 	//Behind the scene functions
 	void fReadFromSQL(std::string name);
 
+	std::string name;
 	int armor;
 };
 

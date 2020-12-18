@@ -38,6 +38,7 @@ void Logic::fMainMenu()
 void Logic::fNewGame()
 {
 	player.fPlayerCreation();
+	player.fGetInventory().fListItems();
 	Enemy enemy("Goblin");
 	Enemy enemy2("Goblin");
 	combat.fBattle(player, enemy, enemy2);

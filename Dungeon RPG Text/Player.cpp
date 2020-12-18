@@ -129,7 +129,6 @@ void Player::fListItem()
 	inventory.fListItems();
 }
 
-
 void Player::fAddItem(Item& item)
 {
 	inventory.fAddItem(item);
@@ -317,18 +316,6 @@ void Player::fReadFromSQL(std::string name)
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 
-		//Add starting armor
-		Armor armor(armor_name);
-		inventory.fAddItem(armor);
-		inventory.fEquipArmor(armor);
-		armor_class = armor.fGetArmor();
-		//Add starting weapon
-		Weapon weapon(weapon_name);
-		inventory.fAddItem(weapon);
-		inventory.fEquipWeapon(weapon);
-		damage = weapon.fGetDamage();
-		roll_times = weapon.fGetTimes();
-
 		fChooseProfSkill(class_name);
 }
 
@@ -406,7 +393,23 @@ void Player::fChooseProfSkill(std::string name)
 
 		*int_skills[choice] += proficiency_bonus;
 		std::cout << string_skills[choice] << " is now " << *int_skills[choice] << ".\n" << std::endl;
+
+		fInitializeEquipment();
 	}
+}
+
+void Player::fInitializeEquipment()
+{
+	////Add starting armor
+	Armor armor(armor_name);
+	std::cout << armor.fGetName() << std::endl;
+	fAddItem(armor);
+	////Add starting weapon
+	//Weapon weapon(weapon_name);
+	//inventory.fAddItem(weapon);
+	//inventory.fEquipWeapon(weapon);
+	//damage = weapon.fGetDamage();
+	//roll_times = weapon.fGetTimes();
 }
 
 int Player::fNoNull(int value)

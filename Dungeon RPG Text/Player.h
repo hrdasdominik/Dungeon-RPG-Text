@@ -40,19 +40,21 @@ public:
 	inline const std::string& fGetClass() const { return class_name; }
 	inline const int& fGetHealth() const { return health; }
 	inline const int& fGetAC() const { return armor_class; }
+	inline const std::string& fGetArmorName() const { return armor_name; }
 	inline const int& fGetInitiative() const { return initiative; }
 	inline const int& fGetExp() const { return exp; }
 	inline const int& fGetLevel() const { return level; }
 	inline const int& fGetPB() const { return proficiency_bonus; }
+	inline Inventory fGetInventory() { return inventory; }
 
 	//Modifiers
 	inline void fSetClass(std::string& class_name) { this->class_name = class_name; }
 	inline void fSetDamage(Weapon& weapon) { this->damage = weapon.fGetDamage(); }
-
 private: 
 	//Behind the scene functions
 	void fReadFromSQL(std::string name);
 	void fChooseProfSkill(std::string name);
+	void fInitializeEquipment();
 	int fNoNull(int value);
 
 private:

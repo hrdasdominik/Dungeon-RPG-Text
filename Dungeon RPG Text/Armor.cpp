@@ -36,9 +36,9 @@ void Armor::fReadFromSQL(std::string name)
     if (rc == SQLITE_DONE)
     {
         sqlite3_finalize(stmt);
-        throw std::string("Weapon not found");
+        throw std::string("Armor not found");
     }
-    fSetName(name);
+    this->name = name;
     armor = sqlite3_column_int(stmt, 1);
     char* ptr = (char*)sqlite3_column_text(stmt, 2);
     fSetDescription(ptr);
