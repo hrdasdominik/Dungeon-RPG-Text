@@ -93,7 +93,7 @@ void Player::fGetStatsAll() const
 
 int Player::fRollInitiative()
 {
-	return dice->fRoll(20, 1) + mod_dexterity;
+	return initiative = dice->fRoll(20, 1) + mod_dexterity;
 }
 
 int Player::fAction()
@@ -108,19 +108,18 @@ int Player::fAction()
 	switch (choice)
 	{
 	case 1:
-		return fRollHit();
+		return 1;
 		break;
 	case 2:
-		return 0;
+		return 2;
 		break;
 	case 3:
-		return 0;
+		return 3;
 		break;
 	case 4:
-		return 0;
+		return 4;
 		break;
 	}
-	return 0;
 }
 
 
@@ -129,6 +128,7 @@ void Player::fListItem()
 {
 	inventory.fListItems();
 }
+
 
 void Player::fAddItem(Item& item)
 {
@@ -227,10 +227,10 @@ void Player::fInitialize(std::string name)
 	alive = true;
 	this->name = name;
 	class_name = "None";
-	health = health + mod_constitution;
+	health = 1;
 	health = fNoNull(health);
 	armor_class = 0;
-	initiative = mod_dexterity;
+	initiative = 0;
 	exp = 0;
 	level = 1;
 	proficiency_bonus = ProficiencyBonus[level - 1];
@@ -308,10 +308,14 @@ void Player::fReadFromSQL(std::string name)
 			std::cout << "Error. Please write the name of the class from the list below." << std::endl;
 			fPickClass();
 		}
+
 		class_name = name;
-		this->health = sqlite3_column_int(stmt, 1);
+		this->health = sqlite3_column_int(stmt, 1) + mod_constitution;
 		this->armor_name = (char*)sqlite3_column_text(stmt, 2);
 		this->weapon_name = (char*)sqlite3_column_text(stmt, 3);
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
 
 		//Add starting armor
 		Armor armor(armor_name);
@@ -324,8 +328,6 @@ void Player::fReadFromSQL(std::string name)
 		inventory.fEquipWeapon(weapon);
 		damage = weapon.fGetDamage();
 		roll_times = weapon.fGetTimes();
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
 
 		fChooseProfSkill(class_name);
 }
@@ -368,7 +370,7 @@ static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
 	sqlite3_close(db);
 }*/
 
-//skill tree treba rijesit kroz baze nekak
+//Need to create different solution
 void Player::fChooseProfSkill(std::string name)
 {
 	if (name == "Fighter")

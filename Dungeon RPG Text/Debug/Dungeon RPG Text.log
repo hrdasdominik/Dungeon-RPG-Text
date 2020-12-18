@@ -1,2 +1,8 @@
-﻿  Combat.cpp
+﻿  Inventory.cpp
+  Player.cpp
+C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Dungeon RPG Text\Player.cpp(398,3): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Generating Code...
+C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Dungeon RPG Text\Player.cpp(123): warning C4715: 'Player::fAction': not all control paths return a value
+C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Dungeon RPG Text\Inventory.cpp(67): warning C4715: 'Inventory::fEquipWeapon': not all control paths return a value
+C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Dungeon RPG Text\Inventory.cpp(102): warning C4715: 'Inventory::fEquipArmor': not all control paths return a value
   Dungeon RPG Text.vcxproj -> C:\Users\Dominik\source\repos\hrdasdominik\Dungeon RPG Text\Debug\Dungeon RPG Text.exe

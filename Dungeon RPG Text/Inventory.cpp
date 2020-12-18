@@ -24,10 +24,15 @@ void Inventory::fDropItem()
 
 void Inventory::fListItems()
 {
-	for (unsigned i = 0; i < bag.size(); i++)
+	if (bag.size() != NULL)
 	{
-		std::cout << i << " - " << bag[i]->fGetName() << '\n';
+		for (unsigned i = 0; i < bag.size(); i++)
+		{
+			std::cout << i << " - " << bag[i]->fGetName() << '\n';
+		}
 	}
+	else
+		std::cout << "Bag is empty." << std::endl;
 }
 
 void Inventory::fPrintDescription()
@@ -98,7 +103,7 @@ int Inventory::fEquipArmor(Item& item)
 
 int Inventory::fUnEquipArmor()
 {
-	Item* ar = dynamic_cast<Item*>(weaponSlot[0]);
+	Item* ar = dynamic_cast<Item*>(armorSlot[0]);
 	bag.push_back(armorSlot[0]);
 	armorSlot.erase(armorSlot.begin());
 	return 10;
@@ -118,10 +123,10 @@ void Inventory::fDeleteItem(int index)
 
 void Inventory::fAddWeapon(Weapon& weapon)
 {
-	weaponSlot.push_back(&weapon);
+	weaponSlot.emplace_back(&weapon);
 }
 
 void Inventory::fAddArmor(Armor& armor)
 {
-	armorSlot.push_back(&armor);
+	armorSlot.emplace_back(&armor);
 }

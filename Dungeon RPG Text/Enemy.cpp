@@ -50,7 +50,7 @@ int Enemy::fAction()
     }
     else
     {
-        int result = rand() % 100 + 1;
+        int result = rand() % 99 + 1;
         if (result > 13)
         {
             return fRollHit();
